@@ -1,0 +1,850 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;}
+html{scroll-behavior:smooth;}
+body{
+  font-family:'Segoe UI',sans-serif;
+  background:#0a0010;
+  color:#e8d5ff;
+  overflow-x:hidden;
+}
+
+/* ===== CANVAS BG ===== */
+#bgCanvas{
+  position:fixed;top:0;left:0;
+  width:100%;height:100%;
+  z-index:0;pointer-events:none;
+}
+
+/* ===== LIGHTNING FLASH OVERLAY ===== */
+#flashOverlay{
+  position:fixed;inset:0;z-index:2;
+  background:rgba(200,150,255,0);
+  pointer-events:none;
+  transition:background 0.05s;
+}
+
+.page{position:relative;z-index:3;}
+
+/* ===== NAV ===== */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:200;
+  display:flex;justify-content:space-between;align-items:center;
+  padding:1rem 3rem;
+  background:rgba(10,0,20,0.75);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid rgba(180,100,255,0.2);
+}
+.logo{
+  font-size:1.25rem;font-weight:800;letter-spacing:0.06em;
+  background:linear-gradient(135deg,#e040fb,#7c4dff,#40c4ff);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.nav-links{display:flex;gap:2rem;list-style:none;}
+.nav-links a{color:rgba(232,213,255,0.55);text-decoration:none;font-size:0.85rem;transition:color .3s;}
+.nav-links a:hover{color:#e040fb;}
+
+/* ===== HERO ===== */
+.hero{
+  min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  text-align:center;padding:6rem 2rem 2rem;
+  position:relative;
+}
+.hero-badge{
+  display:inline-flex;align-items:center;gap:0.6rem;
+  background:rgba(224,64,251,0.1);border:1px solid rgba(224,64,251,0.3);
+  color:#ce93d8;padding:0.4rem 1.3rem;border-radius:50px;
+  font-size:0.78rem;letter-spacing:0.12em;margin-bottom:2rem;
+  animation:fadeDown 0.8s ease forwards;
+}
+.bolt-dot{
+  width:8px;height:8px;
+  background:#e040fb;border-radius:50%;
+  box-shadow:0 0 8px #e040fb,0 0 16px #e040fb;
+  animation:boltPulse 1.2s ease-in-out infinite;
+}
+@keyframes boltPulse{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.4;transform:scale(1.5);}}
+
+.hero h1{
+  font-size:clamp(3rem,9vw,6.5rem);
+  font-weight:900;line-height:1.0;
+  background:linear-gradient(135deg,#ffffff 0%,#e040fb 40%,#7c4dff 70%,#40c4ff 100%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  animation:fadeUp 1s 0.2s ease both;
+  text-shadow:none;filter:drop-shadow(0 0 30px rgba(224,64,251,0.4));
+}
+.hero-role{
+  font-size:clamp(1rem,2.5vw,1.4rem);
+  color:#40c4ff;font-weight:500;letter-spacing:0.08em;
+  animation:fadeUp 1s 0.4s ease both;margin-bottom:1.5rem;margin-top:0.5rem;
+}
+.hero-desc{
+  max-width:580px;color:rgba(232,213,255,0.6);line-height:1.8;font-size:0.93rem;
+  animation:fadeUp 1s 0.6s ease both;margin-bottom:2.5rem;
+}
+.hero-btns{display:flex;gap:1rem;justify-content:center;flex-wrap:wrap;animation:fadeUp 1s 0.8s ease both;}
+.btn-thunder{
+  padding:0.85rem 2.2rem;border-radius:50px;font-size:0.9rem;font-weight:700;
+  background:linear-gradient(135deg,#7c4dff,#e040fb);color:#fff;border:none;
+  cursor:pointer;text-decoration:none;
+  box-shadow:0 0 30px rgba(224,64,251,0.45),0 0 60px rgba(124,77,255,0.2);
+  transition:transform .2s,box-shadow .2s;
+}
+.btn-thunder:hover{transform:translateY(-3px) scale(1.03);box-shadow:0 0 50px rgba(224,64,251,0.7),0 0 100px rgba(124,77,255,0.3);}
+.btn-ghost{
+  padding:0.85rem 2.2rem;border-radius:50px;font-size:0.9rem;font-weight:700;
+  background:transparent;color:#e040fb;
+  border:1px solid rgba(224,64,251,0.35);cursor:pointer;text-decoration:none;
+  transition:background .2s,border-color .3s;
+}
+.btn-ghost:hover{background:rgba(224,64,251,0.1);border-color:#e040fb;}
+
+.hero-stats{
+  display:flex;gap:3rem;margin-top:3rem;flex-wrap:wrap;justify-content:center;
+  animation:fadeUp 1s 1s ease both;
+}
+.hstat-num{
+  font-size:2.4rem;font-weight:900;
+  background:linear-gradient(135deg,#e040fb,#40c4ff);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+}
+.hstat-lbl{font-size:0.72rem;color:rgba(232,213,255,0.4);letter-spacing:0.08em;margin-top:2px;}
+
+/* floating cloud cards */
+.cloud-cards{
+  position:absolute;right:3%;top:50%;transform:translateY(-50%);
+  display:flex;flex-direction:column;gap:0.9rem;
+  animation:cloudFloat 7s ease-in-out infinite;
+}
+@keyframes cloudFloat{0%,100%{transform:translateY(-50%);}50%{transform:translateY(-53%)translateX(-6px);}}
+.ccard{
+  display:flex;align-items:center;gap:0.8rem;
+  background:rgba(124,77,255,0.08);backdrop-filter:blur(14px);
+  border:1px solid rgba(224,64,251,0.2);border-radius:14px;
+  padding:0.7rem 1.2rem;font-size:0.78rem;color:#ce93d8;min-width:190px;
+  box-shadow:0 4px 24px rgba(0,0,0,0.4),inset 0 1px 0 rgba(255,255,255,0.05);
+}
+.ccard-ico{font-size:1.2rem;}
+
+@keyframes fadeUp{from{opacity:0;transform:translateY(30px);}to{opacity:1;transform:translateY(0);}}
+@keyframes fadeDown{from{opacity:0;transform:translateY(-20px);}to{opacity:1;transform:translateY(0);}}
+
+/* ===== SECTION ===== */
+section{padding:6rem 2rem;max-width:1100px;margin:0 auto;}
+.sh{text-align:center;margin-bottom:3.5rem;}
+.stag{
+  display:inline-block;
+  background:rgba(64,196,255,0.08);border:1px solid rgba(64,196,255,0.2);
+  color:#40c4ff;padding:0.3rem 1rem;border-radius:50px;font-size:0.72rem;
+  letter-spacing:0.12em;margin-bottom:1rem;
+}
+.stitle{font-size:2.4rem;font-weight:800;color:#fff;margin-bottom:0.5rem;}
+.ssub{color:rgba(232,213,255,0.45);font-size:0.93rem;}
+
+/* divider lightning */
+.ldivider{
+  display:flex;align-items:center;gap:1rem;margin:0 auto 4rem;max-width:400px;
+}
+.ldivider-line{flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(224,64,251,0.4),transparent);}
+.ldivider-bolt{font-size:1.2rem;color:#e040fb;filter:drop-shadow(0 0 8px #e040fb);}
+
+/* ===== SKILLS ===== */
+.skills-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:1.2rem;}
+.sk-card{
+  background:rgba(255,255,255,0.025);
+  border:1px solid rgba(180,100,255,0.18);border-radius:16px;
+  padding:1.6rem;cursor:default;
+  transition:transform .4s ease,border-color .3s,box-shadow .4s;
+  position:relative;overflow:hidden;
+}
+.sk-card::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 70% 30%,rgba(224,64,251,0.07),transparent 60%);
+  pointer-events:none;
+}
+.sk-card:hover{
+  transform:perspective(600px) rotateY(-8deg) rotateX(4deg) translateZ(12px);
+  border-color:rgba(224,64,251,0.5);
+  box-shadow:0 20px 60px rgba(224,64,251,0.2),inset 0 1px 0 rgba(255,255,255,0.08);
+}
+.sk-ico{font-size:2rem;margin-bottom:0.8rem;display:block;}
+.sk-card h3{font-size:0.75rem;color:#e040fb;letter-spacing:0.12em;margin-bottom:1rem;font-weight:700;}
+.tags{display:flex;flex-wrap:wrap;gap:0.4rem;}
+.tg{
+  background:rgba(224,64,251,0.08);border:1px solid rgba(224,64,251,0.15);
+  color:#ce93d8;padding:0.25rem 0.7rem;border-radius:50px;font-size:0.73rem;
+  transition:background .2s;
+}
+.tg:hover{background:rgba(224,64,251,0.2);}
+.tg.b{background:rgba(64,196,255,0.08);border-color:rgba(64,196,255,0.15);color:#80deea;}
+.tg.g{background:rgba(102,187,106,0.08);border-color:rgba(102,187,106,0.15);color:#a5d6a7;}
+
+/* ===== TIMELINE ===== */
+.tline{position:relative;padding-left:2.5rem;}
+.tline::before{
+  content:'';position:absolute;left:0;top:0;bottom:0;width:2px;
+  background:linear-gradient(180deg,#e040fb,#7c4dff,#40c4ff,transparent);
+}
+.ti{position:relative;margin-bottom:2.5rem;}
+.tdot{
+  position:absolute;left:-2.85rem;top:1.2rem;
+  width:14px;height:14px;border-radius:50%;
+  border:2px solid #0a0010;
+}
+.tdot.p{background:#e040fb;box-shadow:0 0 12px #e040fb,0 0 30px rgba(224,64,251,0.5);}
+.tdot.b{background:#40c4ff;box-shadow:0 0 12px #40c4ff,0 0 30px rgba(64,196,255,0.5);}
+.tdot.v{background:#7c4dff;box-shadow:0 0 12px #7c4dff,0 0 30px rgba(124,77,255,0.5);}
+@keyframes glowPulse{0%,100%{opacity:1;}50%{opacity:0.5;}}
+.tdot{animation:glowPulse 2s ease-in-out infinite;}
+
+.tc{
+  background:rgba(255,255,255,0.025);border:1px solid rgba(180,100,255,0.18);
+  border-radius:16px;padding:1.8rem;
+  transition:border-color .3s,transform .3s,box-shadow .3s;
+  position:relative;overflow:hidden;
+}
+.tc::after{
+  content:'';position:absolute;top:0;left:0;right:0;height:2px;
+  background:linear-gradient(90deg,#e040fb,#40c4ff);
+  opacity:0;transition:opacity .3s;
+}
+.tc:hover{border-color:rgba(224,64,251,0.4);transform:translateX(6px);box-shadow:0 10px 40px rgba(224,64,251,0.12);}
+.tc:hover::after{opacity:1;}
+.thead{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:1rem;flex-wrap:wrap;gap:0.5rem;}
+.trole{font-size:1.05rem;font-weight:700;color:#fff;}
+.tco{font-size:0.83rem;color:#e040fb;margin-top:3px;}
+.tbadge{
+  background:rgba(64,196,255,0.1);border:1px solid rgba(64,196,255,0.2);
+  color:#40c4ff;padding:0.25rem 0.85rem;border-radius:50px;font-size:0.7rem;white-space:nowrap;
+}
+.tc ul{list-style:none;}
+.tc ul li{
+  color:rgba(232,213,255,0.6);font-size:0.86rem;line-height:1.7;
+  padding:0.3rem 0 0.3rem 1.2rem;position:relative;
+  border-bottom:1px solid rgba(255,255,255,0.04);
+}
+.tc ul li::before{content:'⚡';position:absolute;left:0;font-size:0.7rem;top:0.45rem;color:#e040fb;}
+
+/* ===== PROJECTS ===== */
+.pgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1.2rem;}
+.pcard{
+  background:rgba(255,255,255,0.025);border:1px solid rgba(180,100,255,0.18);
+  border-radius:16px;padding:1.8rem;
+  transition:transform .4s ease,border-color .3s,box-shadow .4s;
+  position:relative;overflow:hidden;cursor:default;
+}
+.pcard::before{
+  content:'';position:absolute;top:0;left:0;right:0;height:3px;
+  background:linear-gradient(90deg,#e040fb,#7c4dff,#40c4ff);
+  transform:scaleX(0);transform-origin:left;transition:transform .4s;
+}
+.pcard:hover::before{transform:scaleX(1);}
+.pcard:hover{
+  transform:translateY(-8px) perspective(800px) rotateX(3deg);
+  border-color:rgba(224,64,251,0.45);
+  box-shadow:0 30px 80px rgba(224,64,251,0.18);
+}
+.pemo{font-size:2.5rem;display:block;margin-bottom:1rem;animation:pFloat 3s ease-in-out infinite;}
+@keyframes pFloat{0%,100%{transform:translateY(0);}50%{transform:translateY(-6px);}}
+.pcard h3{font-size:1rem;font-weight:700;color:#fff;margin-bottom:0.5rem;}
+.pcard p{color:rgba(232,213,255,0.55);font-size:0.83rem;line-height:1.6;margin-bottom:1.2rem;}
+.pstack{display:flex;flex-wrap:wrap;gap:0.4rem;}
+.ptg{
+  background:rgba(124,77,255,0.1);border:1px solid rgba(124,77,255,0.2);
+  color:#b39ddb;padding:0.2rem 0.6rem;border-radius:4px;font-size:0.71rem;
+}
+
+/* ===== CERTS ===== */
+.cgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;}
+.ccard{
+  background:rgba(255,255,255,0.025);border:1px solid rgba(180,100,255,0.18);
+  border-radius:14px;padding:1.2rem 1.5rem;
+  display:flex;align-items:center;gap:1rem;
+  transition:border-color .3s,transform .3s,box-shadow .3s;
+}
+.ccard:hover{border-color:#e040fb;transform:translateY(-3px);box-shadow:0 10px 40px rgba(224,64,251,0.15);}
+.cico{
+  width:48px;height:48px;border-radius:12px;flex-shrink:0;
+  background:linear-gradient(135deg,rgba(124,77,255,0.3),rgba(224,64,251,0.3));
+  display:flex;align-items:center;justify-content:center;font-size:1.4rem;
+  border:1px solid rgba(224,64,251,0.2);
+}
+.cname{font-size:0.9rem;font-weight:600;color:#e8d5ff;}
+.cby{font-size:0.74rem;color:rgba(232,213,255,0.35);margin-top:3px;}
+
+/* ===== ACHIEVEMENTS ===== */
+.agrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1rem;}
+.acard{
+  background:rgba(255,255,255,0.025);border:1px solid rgba(180,100,255,0.18);
+  border-radius:14px;padding:1.5rem;
+  transition:border-color .3s,transform .3s;
+  position:relative;overflow:hidden;
+}
+.acard::before{
+  content:'';position:absolute;inset:0;
+  background:radial-gradient(circle at 80% 20%,rgba(224,64,251,0.06),transparent 60%);
+}
+.acard:hover{border-color:rgba(224,64,251,0.45);transform:translateY(-4px);box-shadow:0 12px 40px rgba(224,64,251,0.12);}
+.acard h4{font-size:0.95rem;font-weight:700;color:#fff;margin-bottom:0.5rem;}
+.acard p{color:rgba(232,213,255,0.55);font-size:0.83rem;line-height:1.6;}
+
+/* ===== CONTACT ===== */
+.cont-wrap{text-align:center;}
+.cont-title{
+  font-size:clamp(1.5rem,4vw,2.5rem);font-weight:800;
+  background:linear-gradient(135deg,#e040fb,#7c4dff,#40c4ff);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:1rem;
+}
+.cont-sub{color:rgba(232,213,255,0.5);font-size:0.93rem;margin-bottom:2.5rem;}
+.cont-items{display:flex;flex-wrap:wrap;justify-content:center;gap:1rem;}
+.cont-btn{
+  display:flex;align-items:center;gap:0.7rem;
+  background:rgba(255,255,255,0.03);border:1px solid rgba(180,100,255,0.2);
+  color:#ce93d8;padding:0.9rem 1.8rem;border-radius:50px;
+  text-decoration:none;font-size:0.88rem;
+  transition:background .2s,border-color .2s,transform .2s,box-shadow .2s;
+}
+.cont-btn:hover{background:rgba(224,64,251,0.1);border-color:#e040fb;transform:translateY(-3px);box-shadow:0 8px 30px rgba(224,64,251,0.2);}
+
+footer{
+  text-align:center;padding:2rem;
+  color:rgba(232,213,255,0.2);font-size:0.78rem;
+  border-top:1px solid rgba(180,100,255,0.15);
+  position:relative;z-index:3;
+}
+
+@media(max-width:768px){
+  nav{padding:1rem 1.5rem;}.nav-links{gap:1rem;}
+  section{padding:4rem 1.5rem;}
+  .cloud-cards{display:none;}
+}
+</style>
+</head>
+<body>
+<canvas id="bgCanvas"></canvas>
+<div id="flashOverlay"></div>
+
+<div class="page">
+<nav>
+  <div class="logo">Nerd</div>
+  <ul class="nav-links">
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#exp">Experience</a></li>
+    <li><a href="#projects">Projects</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<div style="position:relative;min-height:100vh;display:flex;align-items:center;justify-content:center;">
+  <div class="hero">
+    <span class="hero-badge"><span class="bolt-dot"></span>DATA ENGINEER · CLOUD ENTHUSIAST · 2026</span>
+    <h1>Pankaj<br>Kishore</h1>
+    <div class="hero-role">Cloud & Data Engineer</div>
+    <p class="hero-desc">
+      B.Tech AI & ML graduate skilled in Python, PySpark, SQL, ETL pipelines, and AWS cloud services. Building scalable, production-ready data systems that drive real decisions.
+    </p>
+    <div class="hero-btns">
+      <a href="mailto:pankajkishore762@gmail.com" class="btn-thunder">⚡ Get In Touch</a>
+      <a href="https://www.linkedin.com/in/pankajkishoree" target="_blank" class="btn-ghost">LinkedIn ↗</a>
+    </div>
+    <div class="hero-stats">
+      <div style="text-align:center"><div class="hstat-num">7.74</div><div class="hstat-lbl">CGPA</div></div>
+      <div style="text-align:center"><div class="hstat-num">4+</div><div class="hstat-lbl">Projects</div></div>
+      <div style="text-align:center"><div class="hstat-num">85%+</div><div class="hstat-lbl">Model Accuracy</div></div>
+      <div style="text-align:center"><div class="hstat-num">NCC B&C</div><div class="hstat-lbl">Certificates</div></div>
+      <div style="text-align:center"><div class="hstat-num" id="visitorCount">—</div><div class="hstat-lbl">VISITORS</div></div>
+    </div>
+  </div>
+  <div class="cloud-cards">
+    <div class="ccard"><span class="ccard-ico">🗂</span>Data Engineering</div>
+    <div class="ccard"><span class="ccard-ico">☁</span>AWS S3 · CloudFront · Lambda</div>
+    <div class="ccard"><span class="ccard-ico">⚡</span>PySpark & ETL Pipelines</div>
+    <div class="ccard"><span class="ccard-ico">🔁</span>CI/CD · GitHub Actions</div>
+    <div class="ccard"><span class="ccard-ico">🏗</span>Serverless Architecture</div>
+  </div>
+</div>
+
+<!-- SKILLS -->
+<section id="skills">
+  <div class="sh">
+    <span class="stag">TECHNICAL SKILLS</span>
+    <div class="stitle">Weapons of Choice</div>
+    <p class="ssub">A full stack of data engineering, cloud, and ML tools to build production-ready pipelines</p>
+  </div>
+  <div class="ldivider"><div class="ldivider-line"></div><span class="ldivider-bolt">⚡</span><div class="ldivider-line"></div></div>
+  <div class="skills-grid">
+    <div class="sk-card">
+      <span class="sk-ico">🐍</span>
+      <h3>PROGRAMMING & ANALYSIS</h3>
+      <div class="tags">
+        <span class="tg">Python</span><span class="tg">PySpark</span>
+        <span class="tg">Pandas</span><span class="tg">NumPy</span>
+        <span class="tg">Scikit-learn</span>
+        <span class="tg">EDA</span><span class="tg">SQL</span>
+      </div>
+    </div>
+    <div class="sk-card">
+      <span class="sk-ico">🏗</span>
+      <h3>DATA ENGINEERING</h3>
+      <div class="tags">
+        <span class="tg b">ETL Pipelines</span><span class="tg b">Data Pipelines</span>
+        <span class="tg b">Data Modeling</span><span class="tg b">Data Warehousing</span>
+        <span class="tg b">Data Cleaning</span>
+      </div>
+    </div>
+    <div class="sk-card">
+      <span class="sk-ico">🗄</span>
+      <h3>DATABASES & TOOLS</h3>
+      <div class="tags">
+        <span class="tg g">MySQL</span><span class="tg g">Git</span>
+        <span class="tg g">GitHub</span><span class="tg g">Jupyter</span>
+        <span class="tg g">Google Colab</span><span class="tg g">Kaggle</span>
+        <span class="tg g">GitHub Actions</span>
+      </div>
+    </div>
+    <div class="sk-card">
+      <span class="sk-ico">☁</span>
+      <h3>CLOUD & BIG DATA</h3>
+      <div class="tags">
+        <span class="tg">AWS S3</span><span class="tg">EC2</span>
+        <span class="tg">Lambda</span><span class="tg b">Glue</span>
+        <span class="tg b">Step Functions</span><span class="tg g">SageMaker</span>
+        <span class="tg g">CloudWatch</span><span class="tg">RDS</span>
+        <span class="tg">CloudFront</span><span class="tg b">Route 53</span>
+        <span class="tg b">API Gateway</span><span class="tg g">DynamoDB</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE & INTERNSHIPS -->
+<section id="exp">
+  <div class="sh">
+    <span class="stag">EXPERIENCE</span>
+    <div class="stitle">Where I've Worked</div>
+    <p class="ssub">Real-world experience across AI/ML and professional domains</p>
+  </div>
+  <div class="ldivider"><div class="ldivider-line"></div><span class="ldivider-bolt">⚡</span><div class="ldivider-line"></div></div>
+  <div class="tline">
+    <div class="ti">
+      <div class="tdot p"></div>
+      <div class="tc">
+        <div class="thead">
+          <div><div class="trole">Executive – Operations</div><div class="tco">I-Conic Solutions · Full-Time</div></div>
+          <span class="tbadge">Jan 2025 – Feb 2026</span>
+        </div>
+        <ul>
+          <li>Managed operational workflows using web-based platforms and internal business applications</li>
+          <li>Assisted in maintaining and coordinating updates for the company website and digital systems</li>
+          <li>Supported basic technical troubleshooting and resolved internal system-related issues for smooth operations</li>
+          <li>Maintained operational data, documentation, and digital records with accuracy and efficiency</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ti">
+      <div class="tdot v"></div>
+      <div class="tc">
+        <div class="thead">
+          <div><div class="trole">AI/ML Intern</div><div class="tco">Innovate Intern · Remote</div></div>
+          <span class="tbadge">May 2025 – Jul 2025</span>
+        </div>
+        <ul>
+          <li>Developed a real-time Face & Eye Detection system using Python and OpenCV</li>
+          <li>Gained hands-on experience in image preprocessing, optimization, and video stream handling</li>
+        </ul>
+      </div>
+    </div>
+    <div class="ti">
+      <div class="tdot b"></div>
+      <div class="tc">
+        <div class="thead">
+          <div><div class="trole">ML Intern</div><div class="tco">Slash Mark IT Startup · Remote</div></div>
+          <span class="tbadge">May 2024 – Jun 2024</span>
+        </div>
+        <ul>
+          <li>Completed ML internship with hands-on model building and training experience</li>
+          <li>Implemented data preprocessing, feature engineering, and predictive modeling with Python libraries</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROJECTS -->
+<section id="projects">
+  <div class="sh">
+    <span class="stag">PROJECTS</span>
+    <div class="stitle">What I've Built</div>
+    <p class="ssub">From serverless AWS architectures to ETL pipelines and real-time computer vision systems</p>
+  </div>
+  <div class="ldivider"><div class="ldivider-line"></div><span class="ldivider-bolt">⚡</span><div class="ldivider-line"></div></div>
+
+  <!-- Featured project -->
+  <div class="pcard" style="margin-bottom:1.2rem;border-color:rgba(64,196,255,0.35);background:rgba(64,196,255,0.04);position:relative;">
+    <div style="position:absolute;top:1rem;right:1.2rem;background:rgba(64,196,255,0.12);border:1px solid rgba(64,196,255,0.3);color:#40c4ff;font-size:0.65rem;letter-spacing:0.1em;padding:0.2rem 0.7rem;border-radius:50px;">⭐ FEATURED</div>
+    <span class="pemo" style="animation-delay:0s">☁</span>
+    <h3>Cloud-Hosted Portfolio Website</h3>
+    <p>Developed and deployed a fully cloud-hosted portfolio on AWS — featuring a serverless visitor tracking system, CDN-accelerated global delivery, HTTPS, DNS routing, and automated CI/CD. Built to production standards with high availability and scalability.</p>
+    <ul style="list-style:none;margin:0.8rem 0 1.2rem;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:0.4rem;">
+      <li style="color:rgba(232,213,255,0.6);font-size:0.82rem;padding-left:1rem;position:relative;"><span style="position:absolute;left:0;color:#40c4ff;">▸</span>AWS S3 static hosting</li>
+      <li style="color:rgba(232,213,255,0.6);font-size:0.82rem;padding-left:1rem;position:relative;"><span style="position:absolute;left:0;color:#40c4ff;">▸</span>CloudFront CDN + HTTPS</li>
+      <li style="color:rgba(232,213,255,0.6);font-size:0.82rem;padding-left:1rem;position:relative;"><span style="position:absolute;left:0;color:#40c4ff;">▸</span>Route 53 DNS routing</li>
+      <li style="color:rgba(232,213,255,0.6);font-size:0.82rem;padding-left:1rem;position:relative;"><span style="position:absolute;left:0;color:#40c4ff;">▸</span>Lambda + API Gateway</li>
+      <li style="color:rgba(232,213,255,0.6);font-size:0.82rem;padding-left:1rem;position:relative;"><span style="position:absolute;left:0;color:#40c4ff;">▸</span>DynamoDB visitor tracker</li>
+      <li style="color:rgba(232,213,255,0.6);font-size:0.82rem;padding-left:1rem;position:relative;"><span style="position:absolute;left:0;color:#40c4ff;">▸</span>GitHub Actions CI/CD</li>
+    </ul>
+    <div class="pstack">
+      <span class="ptg">AWS S3</span><span class="ptg">CloudFront</span>
+      <span class="ptg">Route 53</span><span class="ptg">Lambda</span>
+      <span class="ptg">API Gateway</span><span class="ptg">DynamoDB</span>
+      <span class="ptg">GitHub Actions</span><span class="ptg">HTTPS / CDN</span>
+    </div>
+  </div>
+
+  <div class="pgrid">
+    <div class="pcard">
+      <span class="pemo">📉</span>
+      <h3>Customer Churn Prediction <a href="https://github.com/pankajkishoree/deep-learning-projects/blob/main/customer-churn-prediction.ipynb" target="_blank" style="font-size:0.75rem;color:#40c4ff;margin-left:0.4rem;text-decoration:none;">↗ GitHub</a></h3>
+      <p>Performed EDA on 10,000+ customer records to identify churn patterns. Built a predictive model achieving 85%+ accuracy, with data cleaning, feature engineering, and business insights via visualizations.</p>
+      <div class="pstack">
+        <span class="ptg">Python</span><span class="ptg">TensorFlow</span>
+        <span class="ptg">Keras</span><span class="ptg">Scikit-learn</span>
+        <span class="ptg">Pandas</span><span class="ptg">NumPy</span><span class="ptg">Kaggle</span>
+      </div>
+    </div>
+    <div class="pcard">
+      <span class="pemo" style="animation-delay:.6s">👁</span>
+      <h3>Face & Eye Detection <a href="https://github.com/pankajkishoree/opencv-projects" target="_blank" style="font-size:0.75rem;color:#40c4ff;margin-left:0.4rem;text-decoration:none;">↗ GitHub</a></h3>
+      <p>Real-time detection system using Haarcascade classifiers with webcam input — optimized for low latency and smooth performance in live video streams with image preprocessing and optimization.</p>
+      <div class="pstack">
+        <span class="ptg">Python</span><span class="ptg">OpenCV</span>
+        <span class="ptg">NumPy</span><span class="ptg">Haarcascade</span>
+        <span class="ptg">Jupyter</span>
+      </div>
+    </div>
+    <div class="pcard">
+      <span class="pemo" style="animation-delay:1.2s">🎨</span>
+      <h3>Interactive Whiteboard App <a href="https://github.com/pankajkishoree/White-Board" target="_blank" style="font-size:0.75rem;color:#40c4ff;margin-left:0.4rem;text-decoration:none;">↗ GitHub</a></h3>
+      <p>GUI-based desktop whiteboard with freehand drawing, color selection, pen size adjustment, and eraser — built with a resizable canvas and a user-friendly real-time interface.</p>
+      <div class="pstack">
+        <span class="ptg">Python</span><span class="ptg">TKinter</span>
+        <span class="ptg">Python IDLE</span><span class="ptg">OOP</span>
+      </div>
+    </div>
+  </div>
+</section>
+<section>
+  <div class="sh">
+    <span class="stag">CERTIFICATIONS</span>
+    <div class="stitle">Credentials & Awards</div>
+  </div>
+  <div class="ldivider"><div class="ldivider-line"></div><span class="ldivider-bolt">⚡</span><div class="ldivider-line"></div></div>
+  <div class="cgrid">
+    <div class="ccard">
+      <div class="cico">🐍</div>
+      <div><div class="cname">Python Programming & AI/ML</div><div class="cby">Certified in Python & AI/ML Applications</div></div>
+    </div>
+    <div class="ccard">
+      <div class="cico">☁</div>
+      <div><div class="cname">AWS Certified Developer Associate</div><div class="cby">Ultimate AWS Dev – Udemy</div></div>
+    </div>
+    <div class="ccard">
+      <div class="cico">🏆</div>
+      <div><div class="cname">Academic Excellence Award</div><div class="cby">Tata Steel & Usha Martin</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- CERTIFICATIONS -->
+<section>
+  <div class="sh">
+    <span class="stag">ACHIEVEMENTS</span>
+    <div class="stitle">Milestones</div>
+  </div>
+  <div class="ldivider"><div class="ldivider-line"></div><span class="ldivider-bolt">⚡</span><div class="ldivider-line"></div></div>
+  <div class="agrid">
+    <div class="acard">
+      <h4>🪖 NCC Cadet – B & C Certificates</h4>
+      <p>Served as NCC Cadet from Jul 2022 to Apr 2025 — earned NCC 'B' and 'C' certificates through drills, parades, fitness training, camps, and trekking. Built strong leadership and discipline.</p>
+    </div>
+    <div class="acard">
+      <h4>🏅 Academic Excellence Award</h4>
+      <p>Recognized by Tata Steel and Usha Martin for outstanding academic performance — awarded for consistent dedication to studies and technical excellence.</p>
+    </div>
+    <div class="acard">
+      <h4>🧠 85%+ Neural Network Accuracy</h4>
+      <p>Designed and trained a churn prediction neural network from scratch achieving over 85% accuracy on 10,000 real-world credit card customer records.</p>
+    </div>
+    <div class="acard">
+      <h4>🏆 College Technical Fest</h4>
+      <p>Participated in college technical fest, showcasing strong technical and problem-solving skills through competitive events and hands-on engineering challenges.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="cont-wrap">
+    <div class="cont-title">⚡ Let's Connect & Build</div>
+    <p class="cont-sub">Seeking entry-level Cloud or Data Engineer roles. Open to full-time positions and exciting opportunities.</p>
+    <div class="cont-items">
+      <a href="mailto:pankajkishore762@gmail.com" class="cont-btn"><span>✉</span>pankajkishore762@gmail.com</a>
+      <a href="tel:+917979700294" class="cont-btn"><span>📞</span>+91 79797 00294</a>
+      <a href="https://www.linkedin.com/in/pankajkishoree" target="_blank" class="cont-btn"><span>🔗</span>LinkedIn</a>
+      <div class="cont-btn"><span>📍</span>Bangalore, Karnataka</div>
+    </div>
+  </div>
+</section>
+
+<footer>Pankaj Kishore · Cloud & Data Engineer Portfolio 2026 · Built with ⚡ thunder & code</footer>
+</div>
+
+<script>
+// ===== BACKGROUND ENGINE =====
+const canvas = document.getElementById('bgCanvas');
+const ctx = canvas.getContext('2d');
+const flash = document.getElementById('flashOverlay');
+let W, H, neurons, clouds, mouse={x:-9999,y:-9999};
+let t=0, nextBolt=Date.now()+2000;
+let bolts=[];
+
+function resize(){
+  W=canvas.width=window.innerWidth;
+  H=canvas.height=window.innerHeight;
+  initScene();
+}
+
+function initScene(){
+  const nc=Math.min(Math.floor(W*H/7000),140);
+  neurons=Array.from({length:nc},()=>({
+    x:Math.random()*W, y:Math.random()*H,
+    z:Math.random()*1.5+0.4,
+    vx:(Math.random()-.5)*.3, vy:(Math.random()-.5)*.3,
+    r:Math.random()*2+1,
+    pulse:Math.random()*Math.PI*2,
+    type:Math.floor(Math.random()*3)
+  }));
+  clouds=Array.from({length:6},(_,i)=>({
+    x:Math.random()*W, y:50+Math.random()*250,
+    w:200+Math.random()*300, h:80+Math.random()*100,
+    vx:.2+Math.random()*.3,
+    opacity:.04+Math.random()*.06,
+    flicker:Math.random()*Math.PI*2
+  }));
+}
+
+window.addEventListener('mousemove',e=>{mouse.x=e.clientX;mouse.y=e.clientY;});
+
+// Lightning bolt generator
+function makeBolt(x1,y1,x2,y2,depth){
+  if(depth===0)return[[x1,y1,x2,y2]];
+  const mx=(x1+x2)/2+(Math.random()-.5)*(Math.abs(x2-x1)+Math.abs(y2-y1))*0.35;
+  const my=(y1+y2)/2+(Math.random()-.5)*(Math.abs(x2-x1)+Math.abs(y2-y1))*0.35;
+  return [...makeBolt(x1,y1,mx,my,depth-1),...makeBolt(mx,my,x2,y2,depth-1)];
+}
+
+function spawnBolt(){
+  const sx=Math.random()*W;
+  const segs=makeBolt(sx,0,sx+(Math.random()-.5)*300,H*0.6+Math.random()*H*0.3,6);
+  // add branches
+  let branches=[];
+  for(let i=0;i<3;i++){
+    const idx=Math.floor(Math.random()*segs.length);
+    const [bx1,by1,bx2,by2]=segs[idx];
+    const bsegs=makeBolt(bx2,by2,bx2+(Math.random()-.5)*200,by2+Math.random()*150,3);
+    branches=[...branches,...bsegs];
+  }
+  bolts.push({segs:[...segs,...branches],life:1,maxLife:1});
+  // Flash
+  flash.style.background='rgba(200,150,255,0.18)';
+  setTimeout(()=>flash.style.background='rgba(200,150,255,0)',80);
+}
+
+// Energy pulse particles on neuron lines
+let pulses=[];
+function spawnPulse(){
+  if(neurons.length<2)return;
+  const a=neurons[Math.floor(Math.random()*neurons.length)];
+  const b=neurons[Math.floor(Math.random()*neurons.length)];
+  const dx=b.x-a.x,dy=b.y-a.y,d=Math.sqrt(dx*dx+dy*dy);
+  if(d<160&&d>20)pulses.push({ax:a.x,ay:a.y,bx:b.x,by:b.y,prog:0,speed:.012+Math.random()*.01,c:Math.floor(Math.random()*3)});
+}
+
+const ncolors=[[224,64,251],[64,196,255],[124,77,255]];
+
+function draw(){
+  ctx.clearRect(0,0,W,H);
+
+  // Deep storm sky gradient
+  const skyG=ctx.createLinearGradient(0,0,0,H);
+  skyG.addColorStop(0,'rgba(15,5,35,1)');
+  skyG.addColorStop(0.4,'rgba(25,8,50,1)');
+  skyG.addColorStop(1,'rgba(5,0,15,1)');
+  ctx.fillStyle=skyG;ctx.fillRect(0,0,W,H);
+
+  t+=0.01;
+
+  // Draw moving storm clouds
+  for(const c of clouds){
+    c.x+=c.vx; if(c.x>W+c.w)c.x=-c.w;
+    c.flicker+=0.03;
+    const glow=c.opacity+Math.sin(c.flicker)*0.015;
+    const cg=ctx.createRadialGradient(c.x,c.y,0,c.x,c.y,c.w*.7);
+    cg.addColorStop(0,`rgba(100,40,180,${glow*2})`);
+    cg.addColorStop(0.5,`rgba(60,20,120,${glow})`);
+    cg.addColorStop(1,'rgba(30,0,60,0)');
+    ctx.beginPath();
+    ctx.ellipse(c.x,c.y,c.w,c.h,0,0,Math.PI*2);
+    ctx.fillStyle=cg;ctx.fill();
+  }
+
+  // Neurons
+  for(const n of neurons){
+    n.pulse+=0.018;
+    const dx=mouse.x-n.x,dy=mouse.y-n.y,dist=Math.sqrt(dx*dx+dy*dy);
+    if(dist<110&&dist>0){const f=(110-dist)/110;n.vx-=(dx/dist)*f*1.1;n.vy-=(dy/dist)*f*1.1;}
+    const spd=Math.sqrt(n.vx*n.vx+n.vy*n.vy);
+    if(spd>2.2){n.vx=(n.vx/spd)*2.2;n.vy=(n.vy/spd)*2.2;}
+    n.vx*=0.97;n.vy*=0.97;
+    n.vx+=(Math.random()-.5)*.04;n.vy+=(Math.random()-.5)*.04;
+    n.x+=n.vx*n.z;n.y+=n.vy*n.z;
+    if(n.x<-5)n.x=W+5;if(n.x>W+5)n.x=-5;
+    if(n.y<-5)n.y=H+5;if(n.y>H+5)n.y=-5;
+    const [r,g,b]=ncolors[n.type];
+    const gl=n.r*n.z*(1+Math.sin(n.pulse)*.4);
+    const bright=dist<110?(1-dist/110)*.7+.2:.2;
+    const halo=ctx.createRadialGradient(n.x,n.y,0,n.x,n.y,gl*6);
+    halo.addColorStop(0,`rgba(${r},${g},${b},${.35*bright*n.z})`);
+    halo.addColorStop(0.5,`rgba(${r},${g},${b},${.08*bright*n.z})`);
+    halo.addColorStop(1,`rgba(${r},${g},${b},0)`);
+    ctx.beginPath();ctx.arc(n.x,n.y,gl*6,0,Math.PI*2);ctx.fillStyle=halo;ctx.fill();
+    ctx.beginPath();ctx.arc(n.x,n.y,gl,0,Math.PI*2);ctx.fillStyle=`rgba(${r},${g},${b},${.7+bright*.3})`;ctx.fill();
+    ctx.beginPath();ctx.arc(n.x,n.y,gl*.3,0,Math.PI*2);ctx.fillStyle=`rgba(255,255,255,${.5+bright*.5})`;ctx.fill();
+  }
+
+  // Neuron connections
+  for(let i=0;i<neurons.length;i++){
+    for(let j=i+1;j<neurons.length;j++){
+      const a=neurons[i],b=neurons[j];
+      const dx=a.x-b.x,dy=a.y-b.y,d=Math.sqrt(dx*dx+dy*dy);
+      if(d<155){
+        const alpha=(1-d/155)*.2*(a.z+b.z)/2;
+        const cg2=ctx.createLinearGradient(a.x,a.y,b.x,b.y);
+        const [r1,g1,b1]=ncolors[a.type],[r2,g2,b2]=ncolors[b.type];
+        cg2.addColorStop(0,`rgba(${r1},${g1},${b1},${alpha})`);
+        cg2.addColorStop(1,`rgba(${r2},${g2},${b2},${alpha})`);
+        ctx.beginPath();ctx.moveTo(a.x,a.y);ctx.lineTo(b.x,b.y);
+        ctx.strokeStyle=cg2;ctx.lineWidth=(a.z+b.z)*.5;ctx.stroke();
+      }
+    }
+  }
+
+  // Energy pulses along neuron lines
+  pulses=pulses.filter(p=>{
+    p.prog+=p.speed;
+    if(p.prog>1)return false;
+    const px=p.ax+(p.bx-p.ax)*p.prog;
+    const py=p.ay+(p.by-p.ay)*p.prog;
+    const [r,g,b]=ncolors[p.c];
+    const pg=ctx.createRadialGradient(px,py,0,px,py,6);
+    pg.addColorStop(0,`rgba(${r},${g},${b},1)`);
+    pg.addColorStop(0.4,`rgba(${r},${g},${b},.4)`);
+    pg.addColorStop(1,`rgba(${r},${g},${b},0)`);
+    ctx.beginPath();ctx.arc(px,py,6,0,Math.PI*2);ctx.fillStyle=pg;ctx.fill();
+    return true;
+  });
+  if(Math.random()<.15)spawnPulse();
+
+  // Lightning bolts
+  const now=Date.now();
+  if(now>nextBolt){spawnBolt();nextBolt=now+1800+Math.random()*4000;}
+  bolts=bolts.filter(bolt=>{
+    bolt.life-=0.07;
+    if(bolt.life<=0)return false;
+    const alpha=bolt.life;
+    for(const [x1,y1,x2,y2] of bolt.segs){
+      // Glow layer
+      ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);
+      ctx.strokeStyle=`rgba(200,160,255,${alpha*.3})`;ctx.lineWidth=8;ctx.stroke();
+      // Core
+      ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);
+      ctx.strokeStyle=`rgba(240,200,255,${alpha*.9})`;ctx.lineWidth=1.5;ctx.stroke();
+      // White hot center
+      ctx.beginPath();ctx.moveTo(x1,y1);ctx.lineTo(x2,y2);
+      ctx.strokeStyle=`rgba(255,255,255,${alpha*.6})`;ctx.lineWidth=.5;ctx.stroke();
+    }
+    return true;
+  });
+
+  requestAnimationFrame(draw);
+}
+
+resize();
+window.addEventListener('resize',resize);
+draw();
+
+// 3D tilt on hover
+document.querySelectorAll('.sk-card,.pcard').forEach(el=>{
+  el.addEventListener('mousemove',e=>{
+    const r=el.getBoundingClientRect();
+    const dx=(e.clientX-r.left-r.width/2)/(r.width/2)*12;
+    const dy=(e.clientY-r.top-r.height/2)/(r.height/2)*10;
+    el.style.transform=`perspective(600px) rotateY(${dx}deg) rotateX(${-dy}deg) translateZ(15px)`;
+  });
+  el.addEventListener('mouseleave',()=>el.style.transform='');
+});
+// ===== VISITOR COUNTER (AWS Lambda + DynamoDB via API Gateway) =====
+(async function(){
+  const API_ENDPOINT = 'https://qmpzujdx3g.execute-api.ap-south-1.amazonaws.com/default/VisitorCounter';
+  const el = document.getElementById('visitorCount');
+
+  function animateTo(target) {
+    const duration = 1200, start = Date.now();
+    const tick = () => {
+      const p = Math.min((Date.now() - start) / duration, 1);
+      const ease = 1 - Math.pow(1 - p, 3);
+      el.textContent = Math.floor(ease * target).toLocaleString();
+      if (p < 1) requestAnimationFrame(tick);
+      else el.textContent = target.toLocaleString();
+    };
+    tick();
+  }
+
+  try {
+    const res = await fetch(API_ENDPOINT, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' }
+    });
+
+    let data = await res.json();
+
+    // Lambda proxy integration wraps the real JSON inside a "body" string — unwrap it
+    if (typeof data.body === 'string') {
+      try { data = JSON.parse(data.body); } catch(_) {}
+    }
+
+    // Accept any key name your Lambda might return
+    const count = data.count        != null ? Number(data.count)
+                : data.visitor_count != null ? Number(data.visitor_count)
+                : data.visitors      != null ? Number(data.visitors)
+                : null;
+
+    if (el && count !== null && !isNaN(count)) {
+      animateTo(count);
+    } else {
+      if (el) el.textContent = '✦';
+    }
+  } catch(e) {
+    if (el) el.textContent = '✦';
+  }
+})();
+</script>
+</body>
+</html>
