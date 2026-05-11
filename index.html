@@ -563,8 +563,45 @@ footer{
 }
 .mtag:hover{border-color:var(--p);color:var(--p);background:rgba(224,64,251,.12);}
 
-/* ── CONFETTI CANVAS ── */
-#confettiCanvas{position:fixed;inset:0;z-index:8000;pointer-events:none;}
+/* ── BACK TO TOP ── */
+#back-top{
+  position:fixed;bottom:2rem;left:2rem;z-index:400;
+  width:42px;height:42px;border-radius:50%;
+  background:rgba(255,255,255,.05);border:1px solid var(--border);
+  cursor:pointer;font-size:1rem;
+  display:flex;align-items:center;justify-content:center;
+  backdrop-filter:blur(12px);opacity:0;pointer-events:none;
+  transition:all .3s;color:var(--muted);
+}
+#back-top.visible{opacity:1;pointer-events:all;}
+#back-top:hover{border-color:var(--p);color:var(--p);background:rgba(224,64,251,.1);transform:translateY(-3px);}
+
+/* ── COPY EMAIL TOAST ── */
+#copy-toast{
+  position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(20px);
+  background:rgba(105,240,174,.12);border:1px solid rgba(105,240,174,.3);
+  color:var(--g);padding:.6rem 1.4rem;border-radius:8px;
+  font-family:var(--mono);font-size:.75rem;letter-spacing:.08em;
+  z-index:600;opacity:0;transition:all .35s;pointer-events:none;
+  backdrop-filter:blur(16px);
+}
+#copy-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
+
+/* ── AVAILABILITY PULSE (nav) ── */
+.nav-avail{
+  display:flex;align-items:center;gap:.45rem;
+  font-family:var(--mono);font-size:.68rem;color:var(--g);
+  background:rgba(105,240,174,.07);border:1px solid rgba(105,240,174,.18);
+  padding:.3rem .9rem;border-radius:20px;letter-spacing:.08em;
+}
+.nav-avail-dot{width:7px;height:7px;background:var(--g);border-radius:50%;
+  box-shadow:0 0 6px var(--g);animation:blink 1.2s ease-in-out infinite;}
+
+/* ── SECTION READING TIME ── */
+.read-time{
+  font-family:var(--mono);font-size:.65rem;color:rgba(237,224,255,.3);
+  letter-spacing:.1em;margin-top:.3rem;
+}
 
 /* ── OPEN TO WORK BANNER ── */
 .otw-banner{
@@ -597,7 +634,6 @@ footer{
 </head>
 <body>
 
-<canvas id="confettiCanvas"></canvas>
 <div id="scroll-bar"></div>
 <button id="theme-toggle" title="Toggle theme">🌙</button>
 
@@ -617,6 +653,7 @@ footer{
     <li><a href="#exp">Experience</a></li>
     <li><a href="#projects">Projects</a></li>
     <li><a href="#contact">Contact</a></li>
+    <li><div class="nav-avail"><span class="nav-avail-dot"></span>AVAILABLE</div></li>
     <li><a href="mailto:pankajkishore762@gmail.com" class="nav-resume">Hire Me ↗</a></li>
   </ul>
   <button class="hamburger" id="ham" aria-label="Menu">
@@ -1045,7 +1082,7 @@ footer{
     <div class="cont-title">⚡ Let's Connect &amp; Build</div>
     <p class="cont-sub">Seeking entry-level Cloud or Data Engineer roles. Open to full-time positions and exciting opportunities. Currently based in Bangalore — available immediately.</p>
     <div class="cont-items">
-      <a href="mailto:pankajkishore762@gmail.com" class="cont-btn"><span>✉</span>pankajkishore762@gmail.com</a>
+      <a href="mailto:pankajkishore762@gmail.com" class="cont-btn" onclick="copyEmail(event)"><span>✉</span>pankajkishore762@gmail.com</a>
       <a href="tel:+917979700294" class="cont-btn"><span>📞</span>+91 79797 00294</a>
       <a href="https://www.linkedin.com/in/pankajkishoree" target="_blank" class="cont-btn"><span>🔗</span>LinkedIn</a>
       <div class="cont-btn"><span>📍</span>Bangalore, Karnataka</div>
@@ -1055,6 +1092,9 @@ footer{
 
 <footer>Pankaj Kishore · Cloud &amp; Data Enthusiast · 2026 · Built with ⚡ thunder &amp; code</footer>
 </div><!-- /page -->
+
+<div id="copy-toast">✓ Email copied to clipboard</div>
+<button id="back-top" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">↑</button>
 
 <!-- AI CHAT ASSISTANT -->
 <button id="ai-chat-btn" onclick="toggleChat()" title="Ask me anything about Pankaj!">🤖</button>
@@ -1263,6 +1303,22 @@ document.querySelectorAll('.sk-card,.pcard').forEach(el=>{
   el.addEventListener('mouseleave',()=>el.style.transform='');
 });
 
+// ── BACK TO TOP ──
+const backTop=document.getElementById('back-top');
+window.addEventListener('scroll',()=>{
+  backTop.classList.toggle('visible',window.scrollY>400);
+});
+
+// ── COPY EMAIL ──
+function copyEmail(e){
+  e.preventDefault();
+  navigator.clipboard.writeText('pankajkishore762@gmail.com').then(()=>{
+    const t=document.getElementById('copy-toast');
+    t.classList.add('show');
+    setTimeout(()=>t.classList.remove('show'),2200);
+  });
+}
+
 // ── SCROLL PROGRESS BAR ──
 const scrollBar=document.getElementById('scroll-bar');
 window.addEventListener('scroll',()=>{
@@ -1377,40 +1433,6 @@ function askSug(el){
   document.getElementById('chat-input').value=map[el.textContent]||el.textContent;
   sendChat();
 }
-
-// ── CONFETTI ──
-(function(){
-  const cc=document.getElementById('confettiCanvas');
-  if(!cc)return;
-  cc.width=window.innerWidth;cc.height=window.innerHeight;
-  const ctx3=cc.getContext('2d');
-  const pieces=[];
-  const colors2=['#e040fb','#40c4ff','#69f0ae','#7c4dff','#ffcb6b','#fff'];
-  for(let i=0;i<80;i++)pieces.push({
-    x:Math.random()*cc.width,y:-20-Math.random()*100,
-    r:Math.random()*5+2,c:colors2[Math.floor(Math.random()*colors2.length)],
-    v:Math.random()*2+1,vx:(Math.random()-.5)*1.5,rot:Math.random()*360,rotV:(Math.random()-.5)*4,
-    alpha:1
-  });
-  let frame2=0;
-  function confettiFall(){
-    ctx3.clearRect(0,0,cc.width,cc.height);
-    let alive=false;
-    for(const p of pieces){
-      p.y+=p.v;p.x+=p.vx;p.rot+=p.rotV;
-      if(p.y<cc.height+20)alive=true;
-      if(frame2>90)p.alpha=Math.max(0,p.alpha-0.012);
-      ctx3.save();ctx3.globalAlpha=p.alpha;
-      ctx3.translate(p.x,p.y);ctx3.rotate(p.rot*Math.PI/180);
-      ctx3.fillStyle=p.c;ctx3.fillRect(-p.r,-p.r/2,p.r*2,p.r);
-      ctx3.restore();
-    }
-    frame2++;
-    if(alive&&frame2<200)requestAnimationFrame(confettiFall);
-    else ctx3.clearRect(0,0,cc.width,cc.height);
-  }
-  setTimeout(confettiFall,600);
-})();
 
 // ── THEME TOGGLE ──
 let light=false;
