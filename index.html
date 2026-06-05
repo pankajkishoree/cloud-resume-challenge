@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Pankaj Kishore · Cloud & Data Enthusiast</title>
+<title>Pankaj Kishore · Cloud & Infrastructure Engineer</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;600;700;800;900&display=swap" rel="stylesheet">
 <style>
@@ -222,7 +222,6 @@ section{padding:7rem 2rem;max-width:1140px;margin:0 auto;}
 .term-body{padding:1.5rem;font-family:var(--mono);font-size:.82rem;line-height:1.9;}
 .tc-prompt{color:var(--g);}
 .tc-cmd{color:var(--b);}
-.tc-out{color:rgba(237,224,255,.65);}
 .tc-key{color:var(--p);}
 .tc-val{color:#fff;}
 .tc-line{margin:.15rem 0;}
@@ -510,42 +509,14 @@ footer{
 }
 .chat-sug:hover{background:rgba(64,196,255,.18);}
 
-/* ── RADAR / SKILL CHART SECTION ── */
+/* ── SKILL CHART SECTION ── */
 .radar-wrap{display:flex;align-items:center;justify-content:center;gap:4rem;flex-wrap:wrap;margin-top:1rem;}
 #radarCanvas{filter:drop-shadow(0 0 30px rgba(224,64,251,.3));}
 .radar-legend{display:flex;flex-direction:column;gap:.8rem;}
 .rleg{display:flex;align-items:center;gap:.7rem;font-family:var(--mono);font-size:.76rem;color:var(--muted);}
 .rleg-dot{width:10px;height:10px;border-radius:50%;flex-shrink:0;}
 
-/* ── GITHUB ACTIVITY / CODE SHOWCASE ── */
-.code-showcase{
-  background:rgba(10,0,22,0.85);border:1px solid rgba(102,255,153,0.2);
-  border-radius:14px;overflow:hidden;margin-top:1.5rem;
-  box-shadow:0 0 60px rgba(105,240,174,0.06);
-}
-.code-tabs{display:flex;gap:0;border-bottom:1px solid rgba(102,255,153,.12);}
-.code-tab{
-  padding:.65rem 1.4rem;font-family:var(--mono);font-size:.73rem;color:var(--muted);
-  cursor:pointer;border-bottom:2px solid transparent;transition:all .2s;background:none;border-top:none;border-left:none;border-right:none;
-}
-.code-tab.active{color:var(--g);border-bottom-color:var(--g);}
-.code-body{padding:1.5rem;font-family:var(--mono);font-size:.79rem;line-height:1.95;overflow-x:auto;white-space:pre;}
-.code-body{display:none;}
-.code-body.active{display:block;}
-.kw{color:#c792ea;}.fn{color:#82aaff;}.str{color:#c3e88d;}.cmt{color:rgba(237,224,255,.32);font-style:italic;}.num{color:#f78c6c;}.cls{color:#ffcb6b;}
-
-/* ── THEME TOGGLE ── */
-#theme-toggle{
-  position:fixed;top:5rem;right:1.5rem;z-index:400;
-  width:42px;height:42px;border-radius:50%;
-  background:rgba(255,255,255,.06);border:1px solid var(--border);
-  cursor:pointer;font-size:1.1rem;transition:all .3s;
-  display:flex;align-items:center;justify-content:center;
-  backdrop-filter:blur(12px);
-}
-#theme-toggle:hover{border-color:var(--p);background:rgba(224,64,251,.1);}
-
-/* ── TECH STACK 3D MARQUEE ── */
+/* ── TECH MARQUEE ── */
 .marquee-wrap{overflow:hidden;margin:2rem 0;position:relative;}
 .marquee-wrap::before,.marquee-wrap::after{
   content:'';position:absolute;top:0;bottom:0;width:80px;z-index:2;pointer-events:none;
@@ -587,7 +558,7 @@ footer{
 }
 #copy-toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 
-/* ── AVAILABILITY PULSE (nav) ── */
+/* ── AVAILABILITY PULSE ── */
 .nav-avail{
   display:flex;align-items:center;gap:.45rem;
   font-family:var(--mono);font-size:.68rem;color:var(--g);
@@ -597,22 +568,27 @@ footer{
 .nav-avail-dot{width:7px;height:7px;background:var(--g);border-radius:50%;
   box-shadow:0 0 6px var(--g);animation:blink 1.2s ease-in-out infinite;}
 
-/* ── SECTION READING TIME ── */
-.read-time{
-  font-family:var(--mono);font-size:.65rem;color:rgba(237,224,255,.3);
-  letter-spacing:.1em;margin-top:.3rem;
-}
-
 /* ── OPEN TO WORK BANNER ── */
 .otw-banner{
   display:inline-flex;align-items:center;gap:.5rem;
   background:rgba(105,240,174,0.08);border:1px solid rgba(105,240,174,0.25);
   color:var(--g);padding:.3rem 1rem;border-radius:20px;
   font-family:var(--mono);font-size:.7rem;letter-spacing:.1em;
-  margin-bottom:1rem;animation:none;
+  margin-bottom:1rem;
 }
 .otw-dot{width:8px;height:8px;background:var(--g);border-radius:50%;
   box-shadow:0 0 8px var(--g);animation:blink 1s ease-in-out infinite;}
+
+/* ── THEME TOGGLE ── */
+#theme-toggle{
+  position:fixed;top:5rem;right:1.5rem;z-index:400;
+  width:42px;height:42px;border-radius:50%;
+  background:rgba(255,255,255,.06);border:1px solid var(--border);
+  cursor:pointer;font-size:1.1rem;transition:all .3s;
+  display:flex;align-items:center;justify-content:center;
+  backdrop-filter:blur(12px);
+}
+#theme-toggle:hover{border-color:var(--p);background:rgba(224,64,251,.1);}
 
 /* ── RESPONSIVE ── */
 @media(max-width:900px){
@@ -622,7 +598,6 @@ footer{
   nav{padding:1rem 1.5rem;}
   .nav-links{display:none;}
   .hamburger{display:flex;}
-  .cloud-cards{display:none;}
   section{padding:5rem 1.5rem;}
 }
 @media(max-width:500px){
@@ -646,7 +621,7 @@ footer{
 
 <!-- NAV -->
 <nav>
-  <div class="logo">Nerd</div>
+  <div class="logo">PK</div>
   <ul class="nav-links">
     <li><a href="#about">About</a></li>
     <li><a href="#skills">Skills</a></li>
@@ -673,12 +648,12 @@ footer{
   <div class="hero-inner">
     <div>
       <div class="otw-banner reveal"><span class="otw-dot"></span>OPEN TO WORK · AVAILABLE IMMEDIATELY</div>
-      <div class="hero-badge reveal"><span class="bdot"></span>CLOUD &amp; DATA ENTHUSIAST · 2026</div>
+      <div class="hero-badge reveal"><span class="bdot"></span>CLOUD &amp; INFRASTRUCTURE ENGINEER · 2026</div>
       <h1 class="reveal">Pankaj<br>Kishore</h1>
       <div class="hero-role reveal" id="typed-role"><span id="typed-text"></span><span class="cursor-blink">|</span></div>
       <p class="hero-desc reveal">
-        B.Tech CSE graduate skilled in Python, PySpark, SQL, ETL pipelines, and AWS cloud services.
-        Building scalable, production-ready data systems that drive real decisions.
+        B.Tech CSE graduate with hands-on experience in AWS cloud infrastructure, Linux server administration,
+        CI/CD pipelines, Docker, and Kubernetes. Building reliable, secure, and scalable systems in production environments.
       </p>
       <div class="hero-btns reveal">
         <a href="mailto:pankajkishore762@gmail.com" class="btn-primary">⚡ Get In Touch</a>
@@ -687,19 +662,19 @@ footer{
       </div>
       <div class="hero-stats reveal">
         <div class="hstat"><div class="hstat-n">7.74</div><div class="hstat-l">CGPA</div></div>
-        <div class="hstat"><div class="hstat-n">4+</div><div class="hstat-l">PROJECTS</div></div>
-        <div class="hstat"><div class="hstat-n">85%+</div><div class="hstat-l">ML ACCURACY</div></div>
+        <div class="hstat"><div class="hstat-n">2+</div><div class="hstat-l">YEARS EXP</div></div>
         <div class="hstat"><div class="hstat-n">AWS</div><div class="hstat-l">CERTIFIED</div></div>
+        <div class="hstat"><div class="hstat-n">14+</div><div class="hstat-l">AWS SERVICES</div></div>
         <div class="hstat"><div class="hstat-n" id="visitorCount">—</div><div class="hstat-l">VISITORS</div></div>
       </div>
     </div>
     <div class="hero-right reveal-r">
-      <div class="fcard"><span class="fcard-ic">🗂</span>Data Engineering</div>
-      <div class="fcard"><span class="fcard-ic">☁</span>AWS S3 · CloudFront · Lambda</div>
-      <div class="fcard"><span class="fcard-ic">⚡</span>PySpark & ETL Pipelines</div>
-      <div class="fcard"><span class="fcard-ic">🔁</span>CI/CD · GitHub Actions</div>
-      <div class="fcard"><span class="fcard-ic">🐳</span>Docker · ECS · ECR</div>
-      <div class="fcard"><span class="fcard-ic">🏗</span>Serverless Architecture</div>
+      <div class="fcard"><span class="fcard-ic">🐧</span>Linux Server Administration</div>
+      <div class="fcard"><span class="fcard-ic">☁</span>AWS EC2 · S3 · IAM · VPC</div>
+      <div class="fcard"><span class="fcard-ic">🐳</span>Docker · Kubernetes · ECS</div>
+      <div class="fcard"><span class="fcard-ic">🔁</span>CI/CD · GitHub Actions · Jenkins</div>
+      <div class="fcard"><span class="fcard-ic">🛡</span>CloudWatch · IAM · Security</div>
+      <div class="fcard"><span class="fcard-ic">🏗</span>Terraform · Infrastructure as Code</div>
     </div>
   </div>
 </div>
@@ -721,11 +696,11 @@ footer{
       <div class="tc-line"><span class="tc-prompt">pankaj@cloud</span><span style="color:var(--muted)">:~$ </span><span class="tc-cmd">cat profile.json</span></div>
       <div class="tc-line" style="margin-top:.4rem">{</div>
       <div class="tc-line">&nbsp;&nbsp;<span class="tc-key">"name"</span>: <span class="tc-val">"Pankaj Kishore"</span>,</div>
-      <div class="tc-line">&nbsp;&nbsp;<span class="tc-key">"role"</span>: <span class="tc-val">"Cloud &amp; Data Enthusiast"</span>,</div>
+      <div class="tc-line">&nbsp;&nbsp;<span class="tc-key">"role"</span>: <span class="tc-val">"Cloud &amp; Infrastructure Engineer"</span>,</div>
       <div class="tc-line">&nbsp;&nbsp;<span class="tc-key">"education"</span>: <span class="tc-val">"B.Tech CSE · Arka Jain University · 7.74 CGPA"</span>,</div>
       <div class="tc-line">&nbsp;&nbsp;<span class="tc-key">"location"</span>: <span class="tc-val">"Bangalore, Karnataka, India"</span>,</div>
-      <div class="tc-line">&nbsp;&nbsp;<span class="tc-key">"focus"</span>: [<span class="tc-val">"ETL Pipelines"</span>, <span class="tc-val">"AWS Cloud"</span>, <span class="tc-val">"Data Engineering"</span>],</div>
-      <div class="tc-line">&nbsp;&nbsp;<span class="tc-key">"open_to"</span>: <span class="tc-val">"Entry-level Cloud / Data Engineer roles"</span>,</div>
+      <div class="tc-line">&nbsp;&nbsp;<span class="tc-key">"focus"</span>: [<span class="tc-val">"AWS Cloud"</span>, <span class="tc-val">"Linux Administration"</span>, <span class="tc-val">"DevOps & CI/CD"</span>],</div>
+      <div class="tc-line">&nbsp;&nbsp;<span class="tc-key">"open_to"</span>: <span class="tc-val">"Cloud · Infrastructure · DevOps · SysAdmin · IT roles"</span>,</div>
       <div class="tc-line">&nbsp;&nbsp;<span class="tc-key">"status"</span>: <span style="color:var(--g)">"actively_seeking"</span></div>
       <div class="tc-line">}</div>
       <div class="tc-line" style="margin-top:.7rem"><span class="tc-prompt">pankaj@cloud</span><span style="color:var(--muted)">:~$ </span><span class="cursor-blink">|</span></div>
@@ -760,66 +735,95 @@ footer{
   <div class="sh reveal">
     <span class="stag">TECHNICAL SKILLS</span>
     <div class="stitle">Weapons of Choice</div>
-    <p class="ssub">Full stack of data engineering, cloud, and ML tools for production-ready pipelines</p>
+    <p class="ssub">Cloud infrastructure, Linux, DevOps tooling, and networking for production-ready systems</p>
   </div>
   <div class="ldivider reveal"><div class="ldivider-line"></div><span class="ldivider-ic">⚡</span><div class="ldivider-line"></div></div>
 
   <div class="skills-grid">
     <div class="sk-card reveal">
-      <span class="sk-ico">🐍</span>
-      <h3>PROGRAMMING &amp; ANALYSIS</h3>
+      <span class="sk-ico">🐧</span>
+      <h3>OPERATING SYSTEMS</h3>
       <div class="tags">
-        <span class="tg">Python</span><span class="tg">PySpark</span>
-        <span class="tg">Pandas</span><span class="tg">NumPy</span>
-        <span class="tg">Scikit-learn</span><span class="tg">OpenCV</span>
-        <span class="tg">EDA</span><span class="tg">SQL</span>
-      </div>
-    </div>
-    <div class="sk-card reveal">
-      <span class="sk-ico">🏗</span>
-      <h3>DATA ENGINEERING</h3>
-      <div class="tags">
-        <span class="tg b">ETL Pipelines</span><span class="tg b">Data Modeling</span>
-        <span class="tg b">Data Warehousing</span><span class="tg b">Data Cleaning</span>
-        <span class="tg b">Data Pipelines</span>
-      </div>
-    </div>
-    <div class="sk-card reveal">
-      <span class="sk-ico">🗄</span>
-      <h3>DATABASES</h3>
-      <div class="tags">
-        <span class="tg g">MySQL</span><span class="tg g">PostgreSQL</span>
-        <span class="tg g">DynamoDB</span><span class="tg g">Amazon RDS</span>
+        <span class="tg">Linux (Ubuntu)</span>
+        <span class="tg">Windows</span>
+        <span class="tg">Bash / Shell Scripting</span>
+        <span class="tg">System Monitoring</span>
+        <span class="tg">Log Analysis</span>
       </div>
     </div>
     <div class="sk-card reveal">
       <span class="sk-ico">☁</span>
       <h3>CLOUD — AWS</h3>
       <div class="tags">
-        <span class="tg">S3</span><span class="tg">EC2</span>
-        <span class="tg">Lambda</span><span class="tg b">Glue</span>
-        <span class="tg b">Step Functions</span><span class="tg g">SageMaker</span>
-        <span class="tg g">CloudWatch</span><span class="tg">RDS</span>
-        <span class="tg">CloudFront</span><span class="tg b">Route 53</span>
-        <span class="tg b">API Gateway</span><span class="tg">ALB</span>
+        <span class="tg">EC2</span><span class="tg">S3</span>
+        <span class="tg">IAM</span><span class="tg b">VPC</span>
+        <span class="tg b">Route 53</span><span class="tg g">CloudWatch</span>
+        <span class="tg g">RDS</span><span class="tg">Lambda</span>
+        <span class="tg">API Gateway</span><span class="tg b">DynamoDB</span>
+        <span class="tg b">CloudFront</span><span class="tg">ALB</span>
         <span class="tg">ECS</span><span class="tg">ECR</span>
       </div>
     </div>
     <div class="sk-card reveal">
-      <span class="sk-ico">🔁</span>
-      <h3>DEVOPS &amp; CI/CD</h3>
+      <span class="sk-ico">🐳</span>
+      <h3>CONTAINERS &amp; ORCHESTRATION</h3>
       <div class="tags">
-        <span class="tg o">Git</span><span class="tg o">GitHub</span>
-        <span class="tg o">GitHub Actions</span><span class="tg o">CI/CD</span>
+        <span class="tg b">Docker</span>
+        <span class="tg b">Kubernetes</span>
+        <span class="tg b">Amazon ECS</span>
+        <span class="tg b">Amazon ECR</span>
       </div>
     </div>
     <div class="sk-card reveal">
-      <span class="sk-ico">🛠</span>
-      <h3>TOOLS &amp; ENVIRONMENTS</h3>
+      <span class="sk-ico">🔁</span>
+      <h3>CI/CD &amp; DEVOPS</h3>
       <div class="tags">
-        <span class="tg">Jupyter Notebook</span>
-        <span class="tg">Google Colab</span>
-        <span class="tg">Kaggle</span><span class="tg">VS Code</span>
+        <span class="tg o">GitHub Actions</span>
+        <span class="tg o">Jenkins</span>
+        <span class="tg o">Git</span>
+        <span class="tg o">GitHub</span>
+        <span class="tg o">CI/CD Pipelines</span>
+      </div>
+    </div>
+    <div class="sk-card reveal">
+      <span class="sk-ico">🏗</span>
+      <h3>INFRASTRUCTURE AS CODE</h3>
+      <div class="tags">
+        <span class="tg g">Terraform</span>
+        <span class="tg g">IaC Principles</span>
+      </div>
+    </div>
+    <div class="sk-card reveal">
+      <span class="sk-ico">🌐</span>
+      <h3>NETWORKING &amp; DATABASES</h3>
+      <div class="tags">
+        <span class="tg">TCP/IP</span><span class="tg">DNS</span>
+        <span class="tg">HTTP/HTTPS</span><span class="tg">SSH</span>
+        <span class="tg">Load Balancing</span><span class="tg">Subnetting</span>
+        <span class="tg b">MySQL</span><span class="tg b">PostgreSQL</span>
+      </div>
+    </div>
+    <div class="sk-card reveal">
+      <span class="sk-ico">🐍</span>
+      <h3>PROGRAMMING &amp; SCRIPTING</h3>
+      <div class="tags">
+        <span class="tg">Python</span>
+        <span class="tg">Bash Scripting</span>
+        <span class="tg">Automation</span>
+        <span class="tg">REST APIs</span>
+        <span class="tg">Java (Spring Boot)</span>
+      </div>
+    </div>
+    <div class="sk-card reveal">
+      <span class="sk-ico">🛡</span>
+      <h3>SECURITY &amp; MONITORING</h3>
+      <div class="tags">
+        <span class="tg">IAM Policies</span>
+        <span class="tg">Least Privilege</span>
+        <span class="tg b">CloudWatch</span>
+        <span class="tg b">Alerting</span>
+        <span class="tg">Incident Response</span>
+        <span class="tg">Cybersecurity Basics</span>
       </div>
     </div>
   </div>
@@ -829,36 +833,41 @@ footer{
     <h3 style="font-family:var(--mono);font-size:.7rem;color:var(--b);letter-spacing:.12em;margin-bottom:1.4rem;">PROFICIENCY OVERVIEW</h3>
     <div class="skill-bars">
       <div class="sbar-wrap">
-        <div class="sbar-label"><span>Python & Data Libraries</span><span class="sbar-pct">88%</span></div>
-        <div class="sbar-track"><div class="sbar-fill" data-w="88"></div></div>
+        <div class="sbar-label"><span>AWS Cloud Services</span><span class="sbar-pct">82%</span></div>
+        <div class="sbar-track"><div class="sbar-fill b" data-w="82"></div></div>
       </div>
       <div class="sbar-wrap">
-        <div class="sbar-label"><span>AWS Cloud Services</span><span class="sbar-pct">80%</span></div>
-        <div class="sbar-track"><div class="sbar-fill b" data-w="80"></div></div>
+        <div class="sbar-label"><span>Linux Administration</span><span class="sbar-pct">78%</span></div>
+        <div class="sbar-track"><div class="sbar-fill" data-w="78"></div></div>
       </div>
       <div class="sbar-wrap">
-        <div class="sbar-label"><span>ETL / Data Engineering</span><span class="sbar-pct">75%</span></div>
-        <div class="sbar-track"><div class="sbar-fill" data-w="75"></div></div>
+        <div class="sbar-label"><span>Docker & Containers</span><span class="sbar-pct">75%</span></div>
+        <div class="sbar-track"><div class="sbar-fill b" data-w="75"></div></div>
       </div>
       <div class="sbar-wrap">
-        <div class="sbar-label"><span>SQL & Databases</span><span class="sbar-pct">78%</span></div>
-        <div class="sbar-track"><div class="sbar-fill g" data-w="78"></div></div>
+        <div class="sbar-label"><span>CI/CD & DevOps</span><span class="sbar-pct">72%</span></div>
+        <div class="sbar-track"><div class="sbar-fill g" data-w="72"></div></div>
       </div>
       <div class="sbar-wrap">
-        <div class="sbar-label"><span>Docker / DevOps / CI-CD</span><span class="sbar-pct">65%</span></div>
-        <div class="sbar-track"><div class="sbar-fill b" data-w="65"></div></div>
+        <div class="sbar-label"><span>Python & Scripting</span><span class="sbar-pct">70%</span></div>
+        <div class="sbar-track"><div class="sbar-fill" data-w="70"></div></div>
+      </div>
+      <div class="sbar-wrap">
+        <div class="sbar-label"><span>Networking & Security</span><span class="sbar-pct">68%</span></div>
+        <div class="sbar-track"><div class="sbar-fill g" data-w="68"></div></div>
       </div>
     </div>
   </div>
+
   <!-- Tech Marquee -->
   <div class="marquee-wrap reveal" style="margin-top:3.5rem;">
     <div class="marquee-track">
-      <span class="mtag">Python</span><span class="mtag">PySpark</span><span class="mtag">AWS Lambda</span><span class="mtag">ETL Pipelines</span><span class="mtag">PostgreSQL</span><span class="mtag">Docker</span><span class="mtag">Pandas</span><span class="mtag">TensorFlow</span><span class="mtag">GitHub Actions</span><span class="mtag">CloudFront</span><span class="mtag">DynamoDB</span><span class="mtag">Scikit-learn</span>
-      <span class="mtag">Python</span><span class="mtag">PySpark</span><span class="mtag">AWS Lambda</span><span class="mtag">ETL Pipelines</span><span class="mtag">PostgreSQL</span><span class="mtag">Docker</span><span class="mtag">Pandas</span><span class="mtag">TensorFlow</span><span class="mtag">GitHub Actions</span><span class="mtag">CloudFront</span><span class="mtag">DynamoDB</span><span class="mtag">Scikit-learn</span>
+      <span class="mtag">Linux (Ubuntu)</span><span class="mtag">AWS EC2</span><span class="mtag">Docker</span><span class="mtag">Kubernetes</span><span class="mtag">GitHub Actions</span><span class="mtag">Jenkins</span><span class="mtag">Terraform</span><span class="mtag">CloudWatch</span><span class="mtag">IAM</span><span class="mtag">VPC</span><span class="mtag">CloudFront</span><span class="mtag">Bash Scripting</span>
+      <span class="mtag">Linux (Ubuntu)</span><span class="mtag">AWS EC2</span><span class="mtag">Docker</span><span class="mtag">Kubernetes</span><span class="mtag">GitHub Actions</span><span class="mtag">Jenkins</span><span class="mtag">Terraform</span><span class="mtag">CloudWatch</span><span class="mtag">IAM</span><span class="mtag">VPC</span><span class="mtag">CloudFront</span><span class="mtag">Bash Scripting</span>
     </div>
     <div class="marquee-track marquee-track2">
-      <span class="mtag">Amazon S3</span><span class="mtag">OpenCV</span><span class="mtag">MySQL</span><span class="mtag">Spring Boot</span><span class="mtag">Amazon ECS</span><span class="mtag">NumPy</span><span class="mtag">SageMaker</span><span class="mtag">CI/CD</span><span class="mtag">Amazon RDS</span><span class="mtag">Keras</span><span class="mtag">Route 53</span><span class="mtag">REST APIs</span>
-      <span class="mtag">Amazon S3</span><span class="mtag">OpenCV</span><span class="mtag">MySQL</span><span class="mtag">Spring Boot</span><span class="mtag">Amazon ECS</span><span class="mtag">NumPy</span><span class="mtag">SageMaker</span><span class="mtag">CI/CD</span><span class="mtag">Amazon RDS</span><span class="mtag">Keras</span><span class="mtag">Route 53</span><span class="mtag">REST APIs</span>
+      <span class="mtag">Amazon S3</span><span class="mtag">RDS PostgreSQL</span><span class="mtag">MySQL</span><span class="mtag">Amazon ECS</span><span class="mtag">ECR</span><span class="mtag">Route 53</span><span class="mtag">ALB</span><span class="mtag">Lambda</span><span class="mtag">API Gateway</span><span class="mtag">DynamoDB</span><span class="mtag">SSH</span><span class="mtag">TCP/IP</span>
+      <span class="mtag">Amazon S3</span><span class="mtag">RDS PostgreSQL</span><span class="mtag">MySQL</span><span class="mtag">Amazon ECS</span><span class="mtag">ECR</span><span class="mtag">Route 53</span><span class="mtag">ALB</span><span class="mtag">Lambda</span><span class="mtag">API Gateway</span><span class="mtag">DynamoDB</span><span class="mtag">SSH</span><span class="mtag">TCP/IP</span>
     </div>
   </div>
 
@@ -868,21 +877,23 @@ footer{
     <div class="radar-wrap">
       <canvas id="radarCanvas" width="300" height="300"></canvas>
       <div class="radar-legend">
-        <div class="rleg"><div class="rleg-dot" style="background:var(--p);box-shadow:0 0 8px var(--p);"></div>Cloud / AWS (80%)</div>
-        <div class="rleg"><div class="rleg-dot" style="background:var(--b);box-shadow:0 0 8px var(--b);"></div>Python & ML (88%)</div>
-        <div class="rleg"><div class="rleg-dot" style="background:var(--g);box-shadow:0 0 8px var(--g);"></div>Data Engineering (75%)</div>
-        <div class="rleg"><div class="rleg-dot" style="background:#ffcb6b;box-shadow:0 0 8px #ffcb6b;"></div>Databases & SQL (78%)</div>
-        <div class="rleg"><div class="rleg-dot" style="background:#f78c6c;box-shadow:0 0 8px #f78c6c;"></div>DevOps & CI/CD (65%)</div>
-        <div class="rleg"><div class="rleg-dot" style="background:#c792ea;box-shadow:0 0 8px #c792ea;"></div>Computer Vision (60%)</div>
+        <div class="rleg"><div class="rleg-dot" style="background:var(--p);box-shadow:0 0 8px var(--p);"></div>AWS Cloud (82%)</div>
+        <div class="rleg"><div class="rleg-dot" style="background:var(--b);box-shadow:0 0 8px var(--b);"></div>Linux / OS (78%)</div>
+        <div class="rleg"><div class="rleg-dot" style="background:var(--g);box-shadow:0 0 8px var(--g);"></div>Docker / K8s (75%)</div>
+        <div class="rleg"><div class="rleg-dot" style="background:#ffcb6b;box-shadow:0 0 8px #ffcb6b;"></div>CI/CD & DevOps (72%)</div>
+        <div class="rleg"><div class="rleg-dot" style="background:#f78c6c;box-shadow:0 0 8px #f78c6c;"></div>Scripting (70%)</div>
+        <div class="rleg"><div class="rleg-dot" style="background:#c792ea;box-shadow:0 0 8px #c792ea;"></div>Networking (68%)</div>
       </div>
     </div>
   </div>
 </section>
+
+<!-- EXPERIENCE -->
 <section id="exp">
   <div class="sh reveal">
     <span class="stag">EXPERIENCE &amp; INTERNSHIPS</span>
     <div class="stitle">Where I've Worked</div>
-    <p class="ssub">Real-world experience across cloud, AI/ML, and operations</p>
+    <p class="ssub">Real-world experience in cloud infrastructure, DevOps, and system operations</p>
   </div>
   <div class="ldivider reveal"><div class="ldivider-line"></div><span class="ldivider-ic">⚡</span><div class="ldivider-line"></div></div>
   <div class="tline">
@@ -891,17 +902,18 @@ footer{
       <div class="tdot p"></div>
       <div class="tc">
         <div class="thead">
-          <div><div class="trole">Executive – Operations</div><div class="tco">I-Conic Solutions LLC · Full-Time · On-Site</div></div>
+          <div><div class="trole">Junior Infrastructure Engineer</div><div class="tco">I-Conic Solutions LLC · Full-Time · On-Site</div></div>
           <span class="tbadge">Jan 2025 – Feb 2026</span>
         </div>
         <ul>
-          <li>Supported AWS cloud infrastructure for healthcare RCM applications, ensuring high availability, security, and performance in production environments.</li>
-          <li>Administered Linux servers, monitoring system health (CPU, memory, disk, services, logs) to maintain stability and uptime.</li>
-          <li>Managed EC2 instances, including health checks, lifecycle operations, IAM role assignments, and security group configurations.</li>
-          <li>Implemented monitoring and alerting using AWS CloudWatch and handled incidents through log analysis and SOP-based escalation.</li>
-          <li>Enforced security best practices by applying least-privilege IAM policies and managing Linux user access to support compliance needs.</li>
+          <li>Supported AWS-based infrastructure for healthcare RCM applications, ensuring high availability, security, and performance of production systems.</li>
+          <li>Administered Linux servers, monitoring CPU, memory, disk, services, and logs to maintain system stability and uptime.</li>
+          <li>Managed AWS EC2 resources including instance health checks, start/stop operations, IAM role assignments, and security group configurations.</li>
+          <li>Implemented monitoring and alerting using AWS CloudWatch and handled incident response through log analysis and SOP-based escalation.</li>
+          <li>Enforced security and access controls by applying least-privilege IAM policies, managing Linux user permissions, and supporting compliance requirements.</li>
           <li>Assisted with log management, storage optimization, documentation, and cross-team collaboration in a regulated healthcare environment.</li>
         </ul>
+        <span class="chip">🐧 Linux · EC2 · IAM · CloudWatch · Security Groups · RCM</span>
       </div>
     </div>
 
@@ -909,34 +921,17 @@ footer{
       <div class="tdot v"></div>
       <div class="tc">
         <div class="thead">
-          <div><div class="trole">Cloud Application Developer (AWS) — Intern</div><div class="tco">Qubitara Technologies · Remote</div></div>
-          <span class="tbadge">Oct 2025 – Mar 2026</span>
+          <div><div class="trole">Cloud &amp; DevOps Intern</div><div class="tco">Qubitara Technologies · Remote</div></div>
+          <span class="tbadge">Mar 2026 – May 2026</span>
         </div>
         <ul>
-          <li>Worked on enterprise-level Spring Boot applications deployed on Amazon EC2, utilizing Amazon S3 for secure file storage and efficient data handling</li>
-          <li>Assisted in designing high-availability cloud architecture using AWS Application Load Balancer to improve system reliability and traffic distribution</li>
-          <li>Supported development of event-driven backend processes using AWS Lambda to enhance application performance and reduce infrastructure overhead</li>
-          <li>Managed and optimized PostgreSQL databases on Amazon RDS for improved scalability, performance, and data availability</li>
-          <li>Contributed to backend API development using Java Spring Boot and REST APIs in a cloud-based production environment</li>
-          <li>Participated in containerization and deployment activities using Docker, Amazon ECS, and Amazon ECR</li>
-          <li>Collaborated with cross-functional teams in debugging, testing, and deployment of cloud-native applications</li>
+          <li>Automated application deployments on Amazon EC2 (Linux), supporting scalable and reliable service delivery.</li>
+          <li>Designed high-availability architecture using AWS Application Load Balancer to distribute traffic and improve fault tolerance.</li>
+          <li>Built and maintained CI/CD pipelines using GitHub Actions and Jenkins for automated build, test, and deployment workflows.</li>
+          <li>Containerized applications using Docker and configured monitoring and logging with AWS CloudWatch for better observability.</li>
+          <li>Managed and optimized Amazon RDS (PostgreSQL) and integrated AWS Lambda for event-driven automation and cost-efficient operations.</li>
         </ul>
-        <span class="chip">🐳 Docker · ECS · ECR · ALB · RDS · Lambda · EC2</span>
-      </div>
-    </div>
-
-    <div class="ti reveal">
-      <div class="tdot v"></div>
-      <div class="tc">
-        <div class="thead">
-          <div><div class="trole">AI/ML Intern</div><div class="tco">Innovate Intern · Remote</div></div>
-          <span class="tbadge">May 2025 – Jul 2025</span>
-        </div>
-        <ul>
-          <li>Developed a real-time Face &amp; Eye Detection system using Python and OpenCV</li>
-          <li>Gained hands-on experience in image preprocessing, optimization, and video stream handling for computer vision tasks</li>
-        </ul>
-        <span class="chip">🧠 Python · OpenCV · Computer Vision</span>
+        <span class="chip">🐳 Docker · Jenkins · GitHub Actions · ALB · RDS · Lambda · EC2</span>
       </div>
     </div>
 
@@ -944,25 +939,26 @@ footer{
       <div class="tdot b"></div>
       <div class="tc">
         <div class="thead">
-          <div><div class="trole">ML Intern</div><div class="tco">Slash Mark IT Startup · Remote</div></div>
-          <span class="tbadge">May 2024 – Jun 2024</span>
+          <div><div class="trole">AI/ML Intern</div><div class="tco">Innovate Intern · Remote</div></div>
+          <span class="tbadge">May 2025 – Jul 2025</span>
         </div>
         <ul>
-          <li>Completed a Machine Learning internship gaining hands-on experience in building and training models</li>
-          <li>Implemented data preprocessing, feature engineering, and predictive modeling with Python libraries</li>
+          <li>Developed a real-time Face &amp; Eye Detection system using Python and OpenCV.</li>
+          <li>Gained hands-on experience in image preprocessing, optimization, and video stream handling for computer vision tasks.</li>
         </ul>
-        <span class="chip">📊 Python · Scikit-learn · Feature Engineering</span>
+        <span class="chip">🐍 Python · OpenCV · Computer Vision</span>
       </div>
     </div>
 
   </div>
 </section>
 
+<!-- PROJECTS -->
 <section id="projects">
   <div class="sh reveal">
     <span class="stag">PROJECTS</span>
     <div class="stitle">What I've Built</div>
-    <p class="ssub">From serverless AWS architectures to ETL pipelines and real-time computer vision</p>
+    <p class="ssub">From serverless AWS architectures to real-time computer vision systems</p>
   </div>
   <div class="ldivider reveal"><div class="ldivider-line"></div><span class="ldivider-ic">⚡</span><div class="ldivider-line"></div></div>
 
@@ -990,21 +986,8 @@ footer{
 
   <div class="pgrid">
     <div class="pcard reveal">
-      <span class="pemo" style="animation-delay:.4s">📉</span>
-      <h3>Customer Churn Prediction</h3>
-      <div class="plinks">
-        <a href="https://github.com/pankajkishoree/deep-learning-projects/blob/main/customer-churn-prediction.ipynb" target="_blank" class="plink">↗ GitHub</a>
-      </div>
-      <p>EDA on 10,000+ customer records to identify churn patterns. Built a neural network achieving 85%+ accuracy, with data cleaning, feature engineering, and business insights via visualizations.</p>
-      <div class="pstack">
-        <span class="ptg">Python</span><span class="ptg">TensorFlow</span>
-        <span class="ptg">Keras</span><span class="ptg">Scikit-learn</span>
-        <span class="ptg">Pandas</span><span class="ptg">NumPy</span><span class="ptg">Kaggle</span>
-      </div>
-    </div>
-    <div class="pcard reveal">
-      <span class="pemo" style="animation-delay:.8s">👁</span>
-      <h3>Face &amp; Eye Detection</h3>
+      <span class="pemo" style="animation-delay:.4s">👁</span>
+      <h3>Real-Time Face &amp; Eye Detection</h3>
       <div class="plinks">
         <a href="https://github.com/pankajkishoree/opencv-projects" target="_blank" class="plink">↗ GitHub</a>
       </div>
@@ -1013,18 +996,6 @@ footer{
         <span class="ptg">Python</span><span class="ptg">OpenCV</span>
         <span class="ptg">NumPy</span><span class="ptg">Haarcascade</span>
         <span class="ptg">Jupyter</span>
-      </div>
-    </div>
-    <div class="pcard reveal">
-      <span class="pemo" style="animation-delay:1.2s">🎨</span>
-      <h3>Interactive Whiteboard App</h3>
-      <div class="plinks">
-        <a href="https://github.com/pankajkishoree/White-Board" target="_blank" class="plink">↗ GitHub</a>
-      </div>
-      <p>GUI-based desktop whiteboard with freehand drawing, color selection, pen size adjustment, and eraser — built with resizable canvas and real-time interface using OOP principles.</p>
-      <div class="pstack">
-        <span class="ptg">Python</span><span class="ptg">TKinter</span>
-        <span class="ptg">OOP</span><span class="ptg">Python IDLE</span>
       </div>
     </div>
   </div>
@@ -1039,12 +1010,16 @@ footer{
   <div class="ldivider reveal"><div class="ldivider-line"></div><span class="ldivider-ic">⚡</span><div class="ldivider-line"></div></div>
   <div class="cgrid reveal">
     <div class="ccard">
-      <div class="cico">🐍</div>
-      <div><div class="cname">Python Programming &amp; AI/ML</div><div class="cby">Certified · Python & AI/ML Applications</div></div>
-    </div>
-    <div class="ccard">
       <div class="cico">☁</div>
       <div><div class="cname">AWS Certified Developer Associate</div><div class="cby">Ultimate AWS Dev · Udemy</div></div>
+    </div>
+    <div class="ccard">
+      <div class="cico">🔐</div>
+      <div><div class="cname">Cisco Cybersecurity Essentials</div><div class="cby">FutureSkills Prime · 2026</div></div>
+    </div>
+    <div class="ccard">
+      <div class="cico">🐍</div>
+      <div><div class="cname">Python Programming &amp; AI/ML</div><div class="cby">Certified · Python & Applications</div></div>
     </div>
     <div class="ccard">
       <div class="cico">🏆</div>
@@ -1052,6 +1027,7 @@ footer{
     </div>
   </div>
 </section>
+
 <section>
   <div class="sh reveal">
     <span class="stag">ACHIEVEMENTS</span>
@@ -1068,8 +1044,8 @@ footer{
       <p>Recognized by Tata Steel and Usha Martin for outstanding academic performance — awarded for consistent dedication to studies and technical excellence.</p>
     </div>
     <div class="acard">
-      <h4>🧠 85%+ Neural Network Accuracy</h4>
-      <p>Designed and trained a churn prediction neural network from scratch achieving over 85% accuracy on 10,000 real-world credit card customer records.</p>
+      <h4>🔐 Cisco Cybersecurity Essentials</h4>
+      <p>Completed certification covering cybersecurity fundamentals, network security, cyber threats, risk management, and security best practices via FutureSkills Prime (2026).</p>
     </div>
     <div class="acard">
       <h4>🏆 College Technical Fest</h4>
@@ -1082,7 +1058,7 @@ footer{
 <section id="contact">
   <div class="cont-wrap reveal">
     <div class="cont-title">⚡ Let's Connect &amp; Build</div>
-    <p class="cont-sub">Seeking entry-level Cloud or Data Engineer roles. Open to full-time positions and exciting opportunities. Currently based in Bangalore — available immediately.</p>
+    <p class="cont-sub">Seeking entry-level Cloud, Infrastructure, DevOps, or IT roles. Open to full-time positions and exciting opportunities. Currently based in Bangalore — available immediately.</p>
     <div class="cont-items">
       <a href="mailto:pankajkishore762@gmail.com" class="cont-btn" onclick="copyEmail(event)"><span>✉</span>pankajkishore762@gmail.com</a>
       <a href="tel:+917979700294" class="cont-btn"><span>📞</span>+91 79797 00294</a>
@@ -1092,7 +1068,7 @@ footer{
   </div>
 </section>
 
-<footer>Pankaj Kishore · Cloud &amp; Data Enthusiast · 2026 · Built with ⚡ thunder &amp; code</footer>
+<footer>Pankaj Kishore · Cloud &amp; Infrastructure Engineer · 2026 · Built with ⚡ thunder &amp; code</footer>
 </div><!-- /page -->
 
 <div id="copy-toast">✓ Email copied to clipboard</div>
@@ -1113,8 +1089,8 @@ footer{
     <div class="chat-msg bot">👋 Hi! I'm Pankaj's AI assistant. Ask me anything about his skills, projects, or experience!</div>
   </div>
   <div class="chat-suggestions" id="chat-sugs">
-    <span class="chat-sug" onclick="askSug(this)">📦 Projects</span>
     <span class="chat-sug" onclick="askSug(this)">☁️ AWS skills</span>
+    <span class="chat-sug" onclick="askSug(this)">🐧 Linux exp</span>
     <span class="chat-sug" onclick="askSug(this)">📧 Contact</span>
     <span class="chat-sug" onclick="askSug(this)">💼 Experience</span>
   </div>
@@ -1137,7 +1113,7 @@ ham.addEventListener('click',()=>{mm.classList.toggle('open');});
 function closeMobile(){mm.classList.remove('open');}
 
 // ── TYPEWRITER ──
-const roles=['Cloud & Data Enthusiast','AWS Architect','ETL Pipeline Builder','Data Engineer in Training'];
+const roles=['Cloud & Infrastructure Engineer','AWS Cloud Specialist','Linux Systems Administrator','DevOps & CI/CD Practitioner','Junior Cloud Engineer'];
 let ri=0,ci=0,deleting=false;
 const typed=document.getElementById('typed-text');
 function type(){
@@ -1334,8 +1310,8 @@ window.addEventListener('scroll',()=>{
   if(!c)return;
   const ctx2=c.getContext('2d');
   const cx=150,cy=150,r=110;
-  const labels=['Cloud/AWS','Python&ML','Data Eng','SQL/DB','DevOps','CV/Vision'];
-  const vals=[0.80,0.88,0.75,0.78,0.65,0.60];
+  const labels=['AWS Cloud','Linux/OS','Docker/K8s','CI/CD','Scripting','Networking'];
+  const vals=[0.82,0.78,0.75,0.72,0.70,0.68];
   const colors=['#e040fb','#40c4ff','#69f0ae','#ffcb6b','#f78c6c','#c792ea'];
   const n=labels.length;
   let frame=0;
@@ -1343,7 +1319,6 @@ window.addEventListener('scroll',()=>{
     ctx2.clearRect(0,0,300,300);
     const prog=Math.min(frame/70,1);
     const ease=1-Math.pow(1-prog,3);
-    // Grid
     for(let ring=1;ring<=5;ring++){
       ctx2.beginPath();
       for(let i=0;i<n;i++){
@@ -1353,13 +1328,11 @@ window.addEventListener('scroll',()=>{
       }
       ctx2.closePath();ctx2.strokeStyle='rgba(255,255,255,0.06)';ctx2.lineWidth=1;ctx2.stroke();
     }
-    // Axes
     for(let i=0;i<n;i++){
       const a=i/n*Math.PI*2-Math.PI/2;
       ctx2.beginPath();ctx2.moveTo(cx,cy);ctx2.lineTo(cx+Math.cos(a)*r,cy+Math.sin(a)*r);
       ctx2.strokeStyle='rgba(255,255,255,0.08)';ctx2.lineWidth=1;ctx2.stroke();
     }
-    // Fill
     ctx2.beginPath();
     for(let i=0;i<n;i++){
       const a=i/n*Math.PI*2-Math.PI/2;
@@ -1371,7 +1344,6 @@ window.addEventListener('scroll',()=>{
     grad.addColorStop(0,'rgba(224,64,251,0.35)');grad.addColorStop(1,'rgba(64,196,255,0.12)');
     ctx2.fillStyle=grad;ctx2.fill();
     ctx2.strokeStyle='rgba(224,64,251,0.7)';ctx2.lineWidth=2;ctx2.stroke();
-    // Dots + labels
     for(let i=0;i<n;i++){
       const a=i/n*Math.PI*2-Math.PI/2;
       const rv=r*vals[i]*ease;
@@ -1416,28 +1388,36 @@ async function sendChat(){
   },420);
 }
 function getReply(q){
-  if(/project|built|portfolio|churn|whiteboard|face|eye|detect/.test(q))
-    return"Pankaj has 4 projects: ☁️ Cloud Portfolio on AWS (S3, CloudFront, Lambda, DynamoDB + CI/CD), 📉 Customer Churn Prediction (85%+ accuracy neural network on 10k records), 👁️ Real-time Face & Eye Detection (Python + OpenCV), and 🎨 Interactive Whiteboard App (Python TKinter). Check the Projects section below!";
-  if(/aws|cloud|s3|lambda|ec2|rds|ecs|ecr|alb|sagemaker|dynamo/.test(q))
-    return"Pankaj is AWS Certified (Developer Associate) with hands-on experience in S3, EC2, Lambda, API Gateway, DynamoDB, CloudFront, Route 53, RDS, ECS, ECR, ALB, Glue, Step Functions, SageMaker, and CloudWatch. He's deployed real production systems on AWS! ☁️";
-  if(/skill|tech|stack|language|python|sql|spark|pyspark|docker/.test(q))
-    return"Pankaj's stack: Python (Pandas, NumPy, PySpark, Scikit-learn, TensorFlow, Keras, OpenCV), SQL, MySQL, PostgreSQL, ETL Pipelines, Data Modeling, AWS (14+ services), Docker, GitHub Actions CI/CD, and Jupyter. 🐍";
-  if(/experience|intern|work|job|qubitara|iconic|slash|innovate/.test(q))
-    return"Pankaj has 4 roles: Executive-Ops at I-Conic Solutions (2025–2026), Cloud App Dev Intern at Qubitara Technologies (Spring Boot, Docker, ECS), AI/ML Intern at Innovate Intern (OpenCV), and ML Intern at Slash Mark IT Startup. 💼";
+  if(/project|built|portfolio|face|eye|detect/.test(q))
+    return"Pankaj has 2 key projects: ☁️ Cloud Portfolio on AWS (S3, CloudFront, Route 53, Lambda, API Gateway, DynamoDB + GitHub Actions CI/CD) — a fully serverless, production-grade deployment. And 👁️ Real-Time Face & Eye Detection (Python + OpenCV + Haarcascade). Check the Projects section!";
+  if(/aws|cloud|s3|lambda|ec2|rds|ecs|ecr|alb|dynamo|cloudwatch|vpc|iam/.test(q))
+    return"Pankaj is AWS Certified (Developer Associate) with hands-on experience in EC2, S3, IAM, VPC, Route 53, CloudWatch, RDS, Lambda, API Gateway, DynamoDB, CloudFront, ALB, ECS, and ECR — used in both full-time and internship roles. ☁️";
+  if(/linux|server|admin|os|bash|shell|sysadmin/.test(q))
+    return"Pankaj administered Linux (Ubuntu) servers at I-Conic Solutions, monitoring CPU, memory, disk, services, and logs. He manages user permissions, handles incident response via log analysis, and writes Bash/Shell scripts for automation. 🐧";
+  if(/docker|kubernetes|k8s|container/.test(q))
+    return"Pankaj has hands-on experience with Docker (containerizing apps), Amazon ECS & ECR, and is learning Kubernetes (Pods, Services, Deployments). Used Docker + ECS actively at Qubitara Technologies. 🐳";
+  if(/ci|cd|cicd|jenkins|github action|pipeline|devops/.test(q))
+    return"Pankaj built and maintained CI/CD pipelines using GitHub Actions and Jenkins for automated build, test, and deploy workflows at Qubitara Technologies. He's also set up GitHub Actions for his own cloud portfolio deployment. 🔁";
+  if(/terraform|iac|infra/.test(q))
+    return"Pankaj has basic working knowledge of Terraform for Infrastructure as Code — managing and provisioning cloud resources declaratively. 🏗";
+  if(/skill|tech|stack|language|python|sql/.test(q))
+    return"Pankaj's stack: Linux, AWS (14+ services), Docker, Kubernetes, GitHub Actions, Jenkins, Terraform, Python, Bash Scripting, MySQL, PostgreSQL, TCP/IP, DNS, HTTP/HTTPS, SSH, Load Balancing. 🛠";
+  if(/experience|intern|work|job|qubitara|iconic|innovate/.test(q))
+    return"Pankaj has 3 roles: Junior Infrastructure Engineer at I-Conic Solutions (Jan 2025–Feb 2026, full-time), Cloud & DevOps Intern at Qubitara Technologies (Mar–May 2026, remote), and AI/ML Intern at Innovate Intern (May–Jul 2025). 💼";
   if(/contact|email|phone|reach|hire|linkedin/.test(q))
-    return"Reach Pankaj at pankajkishore762@gmail.com 📧, call +91 79797 00294 📞, or connect on LinkedIn at linkedin.com/in/pankajkishoree. He's based in Bangalore and available immediately! 🚀";
-  if(/education|degree|university|college|cgpa|gpa/.test(q))
-    return"Pankaj holds a B.Tech in CSE from Arka Jain University, Jamshedpur (2022–2026) with a CGPA of 7.74. He also earned NCC B & C certificates and won the Academic Excellence Award from Tata Steel & Usha Martin. 🎓";
-  if(/cert|aws cert|certif/.test(q))
-    return"Pankaj holds an AWS Certified Developer Associate (Udemy), a Python & AI/ML certification, and the Academic Excellence Award from Tata Steel & Usha Martin. 🏆";
+    return"Reach Pankaj at pankajkishore762@gmail.com 📧, call +91 79797 00294 📞, or connect on LinkedIn at linkedin.com/in/pankajkishoree. Based in Bangalore, available immediately! 🚀";
+  if(/education|degree|university|college|cgpa/.test(q))
+    return"Pankaj holds a B.Tech in CSE from Arka Jain University, Jamshedpur (2022–2026), CGPA 7.74. Also earned NCC B & C certificates and Academic Excellence Award from Tata Steel & Usha Martin. 🎓";
+  if(/cert|aws cert|cisco|certif/.test(q))
+    return"Pankaj holds: AWS Certified Developer Associate (Udemy), Cisco Cybersecurity Essentials (FutureSkills Prime, 2026), Python Programming & AI/ML certification, and Academic Excellence Award from Tata Steel & Usha Martin. 🏆";
   if(/available|open|hire|looking|job|role/.test(q))
-    return"Yes! Pankaj is actively seeking entry-level Cloud or Data Engineer roles and is available immediately in Bangalore. Email pankajkishore762@gmail.com to get in touch! ⚡";
-  return"Great question! Pankaj is a Cloud & Data enthusiast skilled in Python, PySpark, AWS, ETL pipelines, and ML. Try asking about his 📦 Projects, ☁️ AWS skills, 💼 Experience, or 📧 Contact!";
+    return"Yes! Pankaj is actively seeking Cloud, Infrastructure, DevOps, SysAdmin, or IT Engineer roles and is available immediately in Bangalore. Email pankajkishore762@gmail.com to get in touch! ⚡";
+  return"Great question! Pankaj is a Cloud & Infrastructure Engineer skilled in AWS, Linux administration, Docker, CI/CD, and Terraform. Try asking about ☁️ AWS skills, 🐧 Linux exp, 💼 Experience, or 📧 Contact!";
 }
 function askSug(el){
   const map={
-    '📦 Projects':'Tell me about his projects',
     '☁️ AWS skills':'What AWS skills does he have?',
+    '🐧 Linux exp':'Tell me about his Linux experience',
     '📧 Contact':'How can I contact Pankaj?',
     '💼 Experience':'What is his work experience?'
   };
@@ -1456,6 +1436,8 @@ document.getElementById('theme-toggle').addEventListener('click',function(){
   document.documentElement.style.setProperty('--surface',light?'rgba(124,77,255,0.06)':'rgba(255,255,255,0.028)');
   this.textContent=light?'🌙':'☀';
 });
+
+// ── VISITOR COUNTER ──
 (async function(){
   const API='https://qmpzujdx3g.execute-api.ap-south-1.amazonaws.com/default/VisitorCounter';
   const el=document.getElementById('visitorCount');
